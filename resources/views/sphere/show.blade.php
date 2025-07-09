@@ -361,9 +361,63 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Tombol Kembali */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            left: auto;
+            z-index: 2000;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            border: none;
+            border-radius: 24px;
+            padding: 10px 18px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .back-btn:hover {
+            background: #007bff;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .back-text {
+            display: inline;
+        }
+        @media (max-width: 600px) {
+            .back-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+                top: 10px;
+                right: 10px;
+                left: auto;
+            }
+            .back-text {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Tombol Kembali -->
+    <button class="back-btn" onclick="handleBackButton()" title="Kembali">
+        <span style="font-size:20px;vertical-align:middle;">&#8592;</span> <span class="back-text">Kembali</span>
+    </button>
+    <script>
+    function handleBackButton() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = '/'; // Ganti '/' ke route utama/daftar sphere jika perlu
+        }
+    }
+    </script>
     <div class="sphere-container">
         @if(isset($fileInfo) && !$fileInfo['exists'])
         <div class="error-panel">
