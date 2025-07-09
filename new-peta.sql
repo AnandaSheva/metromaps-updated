@@ -705,29 +705,29 @@ CREATE TABLE `tb_sphere` (
   `lat` double NOT NULL,
   `lang` double NOT NULL,
   `count_seen` int(11) NOT NULL,
-  `last_seen` datetime NOT NULL
+  `last_seen` datetime NOT NULL,
+  `hotspot_data` JSON NULL COMMENT 'Data hotspot untuk navigasi antar sphere'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tb_sphere`
 --
 
-INSERT INTO `tb_sphere` (`id_sphere`, `nama_lokasi`, `link`, `lat`, `lang`, `count_seen`, `last_seen`) VALUES
-(1, 'Taqwa Depan', '/sphere/view/taqwa_depan', -5.114511499, 105.3071883, 77, '2025-06-24 17:16:49'),
-(2, 'Taqwa Dalam', '/sphere/view/taqwa_dalam', -5.114756, 105.306767, 82, '2025-07-05 10:55:22'),
-(3, 'Taman Merdeka', '/sphere/view/PXL_20240516_065319497.PHOTOSPHERE', -5.114359515, 105.3076325, 137, '2025-07-05 17:27:42'),
-(4, 'Tugu Metrem', '/sphere/view/PXL_20240517_012748972.PHOTOSPHERE', -5.114733, 105.30813, 155, '2025-07-07 10:18:08'),
-(5, 'Tugu Pena', '/sphere/view/PXL_20240517_011540362.PHOTOSPHERE', -5.11413, 105.306272, 220, '2025-07-05 10:55:56'),
-(6, 'Mall Pelayanan Publik Depan', '/sphere/view/PXL_20240517_013716295.PHOTOSPHERE', -5.114041688, 105.3083869, 123, '2025-07-02 15:26:48'),
-(7, 'Mall Pelayanan Publik Pendaftaran', '/sphere/view/PXL_20240517_015239896.PHOTOSPHERE', -5.113880728, 105.3084948, 45, '2025-07-02 15:26:57'),
-(8, 'Mall Pelayanan Publik Pelayanan', '/sphere/view/PXL_20240517_015936562.PHOTOSPHERE', -5.113821286, 105.3082735, 81, '2025-07-05 13:05:30'),
-(9, 'Taman Metro Indonesia Indah Kolam Renang', '/sphere/view/PXL_20240517_071934546.PHOTOSPHERE', -5.100764042, 105.2943138, 80, '2025-06-25 23:44:53'),
-(10, 'Taman Metro Indonesia Indah Taman', '/sphere/view/PXL_20240517_072643400.PHOTOSPHERE', -5.101080955, 105.2944613, 164, '2025-07-07 12:18:06'),
-(11, 'Rumah Informasi Sejarah Swoning Dalam 1', '/sphere/view/020240517_141036_lmc_8.4.PHOTOSPHERE', -5.116065, 105.309379, 80, '2025-07-02 15:27:37'),
-(12, 'Rumah Informasi Sejarah Swoning Dalam 2', '/sphere/view/020240517_142102_lmc_8.4.PHOTOSPHERE', -5.116065, 105.309379, 42, '2025-07-02 15:32:17'),
-(13, 'Rumah Informasi Sejarah Swoning Luar 1', '/sphere/view/020240517_142906_lmc_8.4.PHOTOSPHERE', -5.116147, 105.309555, 50, '2025-07-05 19:40:48'),
-(14, 'Rumah Informasi Sejarah Swoning Luar 2', '/sphere/view/020240517_143655_lmc_8.4.PHOTOSPHERE', -5.116043, 105.30954, 30, '2025-06-09 10:44:15'),
-(15, 'Jembatan Gantung Pelita Sumbersari', '/sphere/view/jembatanpelita', -5.173368129, 105.3063206, 284, '2025-07-06 14:54:52'),
+INSERT INTO `tb_sphere` (`id_sphere`, `nama_lokasi`, `link`, `lat`, `lang`, `count_seen`, `last_seen`, `hotspot_data`) VALUES
+(1, 'Taqwa Depan', '/sphere/view/taqwa_depan', -5.114511499, 105.3071883, 77, '2025-06-24 17:16:49', '[{"type":"navigate","target_id":2,"pitch":-10,"yaw":180,"text":"Masuk ke Dalam Masjid"},{"type":"navigate","target_id":3,"pitch":-5,"yaw":90,"text":"Ke Taman Merdeka"},{"type":"info","pitch":10,"yaw":0,"text":"Masjid Taqwa Kota Metro<br>Tempat ibadah utama di pusat kota"}]'),
+(2, 'Taqwa Dalam', '/sphere/view/taqwa_dalam', -5.114756, 105.306767, 82, '2025-07-05 10:55:22', '[{"type":"navigate","target_id":1,"pitch":-10,"yaw":0,"text":"Keluar Masjid"},{"type":"info","pitch":15,"yaw":180,"text":"Interior Masjid Taqwa<br>Ruang sholat utama yang megah"}]'),
+(3, 'Taman Merdeka', '/sphere/view/PXL_20240516_065319497.PHOTOSPHERE', -5.114359515, 105.3076325, 137, '2025-07-05 17:27:42', '[{"type":"navigate","target_id":1,"pitch":-8,"yaw":270,"text":"Ke Masjid Taqwa"},{"type":"navigate","target_id":5,"pitch":-5,"yaw":180,"text":"Ke Tugu Pena"},{"type":"navigate","target_id":4,"pitch":-5,"yaw":90,"text":"Ke Tugu Metrem"},{"type":"info","pitch":5,"yaw":0,"text":"Taman Merdeka<br>Ruang terbuka hijau di pusat kota"}]'),
+(4, 'Tugu Metrem', '/sphere/view/PXL_20240517_012748972.PHOTOSPHERE', -5.114733, 105.30813, 155, '2025-07-07 10:18:08', '[{"type":"navigate","target_id":3,"pitch":-8,"yaw":270,"text":"Ke Taman Merdeka"},{"type":"navigate","target_id":6,"pitch":-5,"yaw":90,"text":"Ke Mall Pelayanan Publik"},{"type":"info","pitch":20,"yaw":0,"text":"Tugu Metrem<br>Ikon Kota Metro yang terkenal"}]'),
+(5, 'Tugu Pena', '/sphere/view/PXL_20240517_011540362.PHOTOSPHERE', -5.11413, 105.306272, 220, '2025-07-05 10:55:56', '[{"type":"navigate","target_id":3,"pitch":-8,"yaw":0,"text":"Ke Taman Merdeka"},{"type":"navigate","target_id":1,"pitch":-5,"yaw":45,"text":"Ke Masjid Taqwa"},{"type":"info","pitch":25,"yaw":180,"text":"Tugu Pena Metro<br>Monumen pendidikan dan literasi"}]'),
+(6, 'Mall Pelayanan Publik Depan', '/sphere/view/PXL_20240517_013716295.PHOTOSPHERE', -5.114041688, 105.3083869, 123, '2025-07-02 15:26:48', '[{"type":"navigate","target_id":7,"pitch":-5,"yaw":45,"text":"Ke Area Pendaftaran"},{"type":"navigate","target_id":8,"pitch":-5,"yaw":90,"text":"Ke Area Pelayanan"},{"type":"navigate","target_id":4,"pitch":-8,"yaw":270,"text":"Ke Tugu Metrem"},{"type":"info","pitch":10,"yaw":0,"text":"Mall Pelayanan Publik<br>Pusat pelayanan pemerintahan"}]'),
+(7, 'Mall Pelayanan Publik Pendaftaran', '/sphere/view/PXL_20240517_015239896.PHOTOSPHERE', -5.113880728, 105.3084948, 45, '2025-07-02 15:26:57', '[{"type":"navigate","target_id":6,"pitch":-8,"yaw":225,"text":"Ke Area Depan"},{"type":"navigate","target_id":8,"pitch":-5,"yaw":135,"text":"Ke Area Pelayanan"},{"type":"info","pitch":5,"yaw":0,"text":"Area Pendaftaran<br>Tempat registrasi layanan publik"}]'),
+(8, 'Mall Pelayanan Publik Pelayanan', '/sphere/view/PXL_20240517_015936562.PHOTOSPHERE', -5.113821286, 105.3082735, 81, '2025-07-05 13:05:30', '[{"type":"navigate","target_id":6,"pitch":-8,"yaw":270,"text":"Ke Area Depan"},{"type":"navigate","target_id":7,"pitch":-5,"yaw":315,"text":"Ke Area Pendaftaran"},{"type":"info","pitch":8,"yaw":90,"text":"Area Pelayanan<br>Counter layanan administrasi"}]'),
+(9, 'Taman Metro Indonesia Indah Kolam Renang', '/sphere/view/PXL_20240517_071934546.PHOTOSPHERE', -5.100764042, 105.2943138, 80, '2025-06-25 23:44:53', '[{"type":"navigate","target_id":10,"pitch":-5,"yaw":180,"text":"Ke Area Taman"},{"type":"info","pitch":0,"yaw":0,"text":"Kolam Renang Metro Indonesia Indah<br>Fasilitas olahraga air keluarga"}]'),
+(10, 'Taman Metro Indonesia Indah Taman', '/sphere/view/PXL_20240517_072643400.PHOTOSPHERE', -5.101080955, 105.2944613, 164, '2025-07-07 12:18:06', '[{"type":"navigate","target_id":9,"pitch":-5,"yaw":0,"text":"Ke Kolam Renang"},{"type":"info","pitch":5,"yaw":180,"text":"Taman Rekreasi Metro Indonesia Indah<br>Tempat wisata keluarga populer"}]'),
+(11, 'Rumah Informasi Sejarah Swoning Dalam 1', '/sphere/view/020240517_141036_lmc_8.4.PHOTOSPHERE', -5.116065, 105.309379, 80, '2025-07-02 15:27:37', '[{"type":"navigate","target_id":13,"pitch":-8,"yaw":180,"text":"Keluar ke Area Luar"},{"type":"navigate","target_id":14,"pitch":-5,"yaw":90,"text":"Ke Area Luar 2"},{"type":"info","pitch":10,"yaw":0,"text":"Interior Rumah Bersejarah<br>Peninggalan arsitektur kolonial"}]'),
+(13, 'Rumah Informasi Sejarah Swoning Luar 1', '/sphere/view/020240517_142906_lmc_8.4.PHOTOSPHERE', -5.116147, 105.309555, 50, '2025-07-05 19:40:48', '[{"type":"navigate","target_id":11,"pitch":-8,"yaw":0,"text":"Masuk ke Dalam Rumah"},{"type":"navigate","target_id":14,"pitch":-5,"yaw":135,"text":"Ke Area Luar 2"},{"type":"info","pitch":8,"yaw":270,"text":"Halaman Rumah Bersejarah<br>Bangunan cagar budaya Kota Metro"}]'),
+(14, 'Rumah Informasi Sejarah Swoning Luar 2', '/sphere/view/020240517_143655_lmc_8.4.PHOTOSPHERE', -5.116043, 105.30954, 30, '2025-06-09 10:44:15', '[{"type":"navigate","target_id":11,"pitch":-8,"yaw":270,"text":"Masuk ke Dalam Rumah"},{"type":"navigate","target_id":13,"pitch":-5,"yaw":315,"text":"Ke Area Luar 1"},{"type":"info","pitch":12,"yaw":90,"text":"Sisi Samping Rumah<br>Detail arsitektur tradisional"}]'),
+(15, 'Jembatan Gantung Pelita Sumbersari', '/sphere/view/jembatanpelita', -5.173368129, 105.3063206, 284, '2025-07-06 14:54:52', '[{"type":"info","pitch":0,"yaw":0,"text":"Jembatan Gantung Pelita<br>Jembatan penyeberangan bersejarah"},{"type":"info","pitch":-15,"yaw":180,"text":"Sungai Way Sekampung<br>Aliran sungai utama Kota Metro"}]'),
 (16, 'Kantor Pemda Kota Metro', '/sphere/view/pemda', -5.113521508, 105.3067325, 157, '2025-07-06 13:38:42'),
 (17, 'Tugu Selamat Datang Kota Metro', '/sphere/view/020240517_091330_lmc_8.4.PHOTOSPHERE', -5.1417636, 105.2730796, 162, '2025-07-06 04:50:15'),
 (18, 'Tugu Gemerlang', '/sphere/view/020240517_144431_lmc_8.4.PHOTOSPHERE', -5.116196, 105.309873, 134, '2025-06-29 23:46:39'),

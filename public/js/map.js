@@ -142,7 +142,7 @@ function addPemerintahanMarker(index, lat, lng, unit) {
 }
 
 function addPendidikanMarker(index, lat, lng, nama, alamat) {
-    const pendidikanIcon = createIcon('#22c55e', 'graduation-cap');
+    const pendidikanIcon = createIcon('#109c42', 'graduation-cap');
     const marker = L.marker([lat, lng], {icon: pendidikanIcon})
         .addTo(layerGroups.pendidikan);
     
@@ -157,7 +157,7 @@ function addPendidikanMarker(index, lat, lng, nama, alamat) {
         
         marker.bindPopup(`
             <div style="font-family: 'Inter', sans-serif; min-width: 200px;">
-                <h3 style="margin: 0 0 8px 0; color: #22c55e; font-size: 16px; font-weight: 600;">${nama}</h3>
+                <h3 style="margin: 0 0 8px 0; color: #109c42; font-size: 16px; font-weight: 600;">${nama}</h3>
                 <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.4;">
                     <i data-lucide="map-pin" style="width: 14px; height: 14px; margin-right: 4px; vertical-align: middle;"></i>
                     ${alamat}
@@ -183,12 +183,33 @@ function addVirtualTourMarker(index, lat, lng, nama, link) {
     });
     
     marker.on('click', function() {
-        openVirtualTour(link, nama, lat, lng);
+        mapInstance.setView([lat, lng], 18);
+        
+        // Tampilkan popup dengan preview dan informasi hotspot
+        marker.bindPopup(`
+            <div style="font-family: 'Inter', sans-serif; min-width: 280px;">
+                <h3 style="margin: 0 0 12px 0; color: #00BFFF; font-size: 16px; font-weight: 600; display: flex; align-items: center;">
+                    <i data-lucide="binoculars" style="width: 20px; height: 20px; margin-right: 8px;"></i>
+                    ${nama}
+                </h3>
+            
+                <div style="text-align: center; margin: 15px 0;">
+                    <button onclick="openVirtualTour('${link}', '${nama}', ${lat}, ${lng})" 
+                            style="background: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; box-shadow: 0 2px 8px rgba(0, 191, 255, 0.3); transition: all 0.2s;">
+                        Buka Virtual Tour
+                    </button>
+                </div>
+            </div>
+        `).openPopup();
+        
+        setTimeout(() => {
+            lucide.createIcons();
+        }, 10);
     });
 }
 
 function addLayananMarker(index, lat, lng, nama, alamat) {
-    const layananIcon = createIcon('#FF6C37', 'users');
+    const layananIcon = createIcon('#e36334', 'users');
     const marker = L.marker([lat, lng], {icon: layananIcon})
         .addTo(layerGroups.layanan);
     
@@ -203,15 +224,15 @@ function addLayananMarker(index, lat, lng, nama, alamat) {
         
         marker.bindPopup(`
             <div style="font-family: 'Inter', sans-serif; min-width: 220px;">
-                <h3 style="margin: 0 0 10px 0; color: #FF6C37; font-size: 16px; font-weight: 600;">${nama}</h3>
-                <div style="background: #fff5f2; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #FF6C37; margin-top: 8px;">
+                <h3 style="margin: 0 0 10px 0; color: #e36334; font-size: 16px; font-weight: 600;">${nama}</h3>
+                <div style="background: #fff5f2; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #e36334; margin-top: 8px;">
                     <span style="color: #666; font-size: 13px; font-weight: 500; display: flex; align-items: center;">
-                        <i data-lucide="map-pin" style="width: 14px; height: 14px; margin-right: 6px; vertical-align: middle; color: #FF6C37;"></i>
+                        <i data-lucide="map-pin" style="width: 14px; height: 14px; margin-right: 6px; vertical-align: middle; color: #e36334;"></i>
                         ${alamat}
                     </span>
                 </div>
                 <div style="margin-top: 8px; padding: 6px 0; border-top: 1px solid #f0f0f0;">
-                    <span style="color: #FF6C37; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <span style="color: #e36334; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
                         <i data-lucide="users" style="width: 12px; height: 12px; margin-right: 4px; vertical-align: middle;"></i>
                         Layanan Publik
                     </span>
