@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metro Maps Kota Metro</title>
+    <title>Selamat Datang di Metro Maps</title>
     <style>
         body, html {
             margin: 0;
