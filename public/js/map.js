@@ -561,6 +561,84 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Hamburger menu functionality
+    const hamburger = document.getElementById('hamburger-menu');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (hamburger && navMenu) {
+        // Enhanced click handler with better touch support
+        hamburger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('open');
+            
+            // Prevent body scroll when menu is open on mobile
+            if (window.innerWidth <= 1024) {
+                document.body.classList.toggle('menu-open', navMenu.classList.contains('open'));
+            }
+        });
+        
+        // Close menu when clicking backdrop (outside menu but inside backdrop)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 1024 && navMenu.classList.contains('open')) {
+                // Check if click is outside both nav menu and hamburger
+                if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+                    navMenu.classList.remove('open');
+                    hamburger.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                }
+            }
+        });
+        
+        // Close menu when touching/clicking on map area (mobile)
+        const mapElement = document.getElementById('map');
+        if (mapElement) {
+            mapElement.addEventListener('click', function() {
+                if (window.innerWidth <= 1024 && navMenu.classList.contains('open')) {
+                    navMenu.classList.remove('open');
+                    hamburger.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        }
+        
+        // Close menu when nav item is clicked (for mobile)
+        const navItems = document.querySelectorAll('.nav-item, .nav-item-audio');
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Ensure the navigation function still works
+                if (window.innerWidth <= 1024) {
+                    // Small delay to allow navigation to complete
+                    setTimeout(() => {
+                        navMenu.classList.remove('open');
+                        hamburger.classList.remove('active');
+                        document.body.classList.remove('menu-open');
+                    }, 150);
+                }
+            });
+        });
+        
+        // Close menu on window resize if screen becomes large
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1024) {
+                navMenu.classList.remove('open');
+                hamburger.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        });
+        
+        // Handle escape key to close menu
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+                navMenu.classList.remove('open');
+                hamburger.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        });
+    }
+
     // Event listeners for Pangan filters
     const indikatorSelect = document.getElementById('indikator-select');
     const tahunSelect = document.getElementById('tahun-select');

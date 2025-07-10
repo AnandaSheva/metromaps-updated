@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="nav-menu">
+            <div class="nav-menu" id="nav-menu">
                 <a href="#" class="nav-item" id="cctv-nav" onclick="showOnly('cctv')">
                     <span class="nav-item-text">CCTV</span>
                     <i data-lucide="cctv" class="nav-item-icon"></i>
@@ -65,6 +65,12 @@
                     <i data-lucide="volume-off" class="nav-item-icon" id="audio-toggle-icon"></i>
                 </a>
             </div>
+            
+            <button class="hamburger-menu" id="hamburger-menu" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </div>
 
