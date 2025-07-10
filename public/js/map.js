@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     try {
         // Initialize map
-        mapInstance = L.map('map').setView([-5.114141, 105.307573], 16);
+        mapInstance = L.map('map').setView([-5.114056, 105.307601], 16);
         
-        // Add tile layer with error handling
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '',
-            maxZoom: 19,
-            detectRetina: true
+        // Add Google Maps tile layer
+        L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '&copy; <a href="https://www.google.com/maps">Google Maps</a>'
         }).addTo(mapInstance);
 
         console.log('Map initialized successfully');

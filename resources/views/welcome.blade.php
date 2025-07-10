@@ -32,8 +32,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 40px;
-            margin-bottom: 40px;
+            gap: 30px;
+            margin-bottom: 50px;
+            padding: 20px;
         }
         
         .logo {
@@ -41,41 +42,73 @@
         }
         
         .metro-logo {
-            width: 100px;
+            width: 80px;
             height: auto;
         }
         
         .diskominfo-logo-splash {
-            width: 200px;
+            width: 280px;
             height: auto;
         }
         
         .content {
             text-align: center;
-            max-width: 600px;
+            max-width: 700px;
         }
         
         h1 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 16px;
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
         
         p {
-            font-size: 18px;
-            color: #555;
+            font-size: 20px;
+            color: #34495e;
             font-style: italic;
             margin-top: 0;
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .logos-container {
-                flex-direction: column;
                 gap: 20px;
+                margin-bottom: 40px;
+            }
+            
+            .metro-logo {
+                width: 70px;
+            }
+            
+            .diskominfo-logo-splash {
+                width: 240px;
             }
             
             h1 {
-                font-size: 22px;
+                font-size: 28px;
+            }
+            
+            p {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .logos-container {
+                gap: 15px;
+                margin-bottom: 30px;
+            }
+            
+            .metro-logo {
+                width: 60px;
+            }
+            
+            .diskominfo-logo-splash {
+                width: 200px;
+            }
+            
+            h1 {
+                font-size: 24px;
             }
             
             p {
