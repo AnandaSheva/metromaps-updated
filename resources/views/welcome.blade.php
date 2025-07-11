@@ -4,99 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selamat Datang di Metro Maps</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-        
-        .splash-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #f5f5f5;
-            background-image: url("{{ asset('images/bg-pattern.png') }}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: repeat;
-            padding: 20px;
-            
-        }
-        
-        .logos-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .logo {
-            display: block;
-        }
-        
-        .metro-logo {
-            width: 100px;
-            height: auto;
-        }
-        
-        .diskominfo-logo-splash {
-            width: 200px;
-            height: auto;
-        }
-        
-        .content {
-            text-align: center;
-            max-width: 600px;
-        }
-        
-        h1 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 16px;
-        }
-        
-        p {
-            font-size: 18px;
-            color: #555;
-            font-style: italic;
-            margin-top: 0;
-        }
-        
-        @media (max-width: 600px) {
-            .logos-container {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            h1 {
-                font-size: 22px;
-            }
-            
-            p {
-                font-size: 16px;
-            }
-        }
-    </style>
+    @vite('resources/css/app.css')
 </head>
-<body>
-    <div class="splash-container">
-        <div class="logos-container">
+<body class="m-0 p-0 h-full font-sans overflow-hidden">
+    <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 bg-cover bg-center bg-repeat p-5 max-sm:flex-col" 
+         style="background-image: url('{{ asset('images/bg-pattern.png') }}');">
+        
+        <!-- Logos Container -->
+        <div class="flex items-center justify-center gap-10 mb-10 max-sm:flex-col max-sm:gap-5">
             <!-- Metro Logo -->
-            <img src="{{ asset('images/logokotametro.png') }}" alt="Metro Logo" class="logo metro-logo">
+            <img src="{{ asset('images/logokotametro.png') }}" alt="Metro Logo" class="block w-25 h-auto">
             
             <!-- Diskominfo Logo -->
-            <img src="{{ asset('logodiskominfo.png') }}" alt="Diskominfo Kota Metro" class="logo diskominfo-logo-splash">
+            <img src="{{ asset('logodiskominfo.png') }}" alt="Diskominfo Kota Metro" class="block w-50 h-auto">
         </div>
         
-        <div class="content">
-            <h1>Selamat Datang di Metro Maps Kota Metro!</h1>
-            <p>"Peta Cerdas untuk Menjelajahi Kota Metro"</p>
+        <!-- Content -->
+        <div class="text-center max-w-2xl">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4 max-sm:text-xl">Selamat Datang di Metro Maps Kota Metro!</h1>
+            <p class="text-lg text-gray-600 italic mt-0 max-sm:text-base">"Peta Cerdas untuk Menjelajahi Kota Metro"</p>
         </div>
     </div>
 </body>
