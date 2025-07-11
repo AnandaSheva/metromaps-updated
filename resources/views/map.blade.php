@@ -38,7 +38,7 @@
         
         /* Hamburger menu active states */
         .hamburger-menu.active span:nth-child(1) {
-            transform: rotate(45deg) translate(7px, 7px);
+            transform: rotate(45deg) translate(5px, 5px);
             background: #3b82f6;
         }
         
@@ -48,7 +48,7 @@
         }
         
         .hamburger-menu.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
+            transform: rotate(-45deg) translate(5px, -5px);
             background: #3b82f6;
         }
         
@@ -57,106 +57,47 @@
             border-color: rgba(59, 130, 246, 0.3);
         }
         
-        /* Mobile nav menu styles - tetap menggunakan CSS untuk kompleksitas yang tinggi */
-        @media (max-width: 1024px) {
-            .nav-menu:not(.header-content > .nav-menu) {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 320px;
-                height: 100vh;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 80px 20px 20px;
-                gap: 0;
-                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
-                border-left: 1px solid rgba(0, 0, 0, 0.1);
-                z-index: 2010;
-                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                overflow-y: auto;
-                justify-content: flex-start;
-                align-items: stretch;
-            }
-            
-            .nav-menu.open:not(.header-content > .nav-menu) {
-                right: 0;
-            }
-            
-            .mobile-nav-header {
-                display: flex !important;
-                align-items: center;
-                gap: 12px;
-                padding: 0 0 30px 0;
-                margin-bottom: 20px;
-                border-bottom: 2px solid #e5e7eb;
-            }
-            
-            .mobile-nav-logo {
-                width: 32px;
-                height: 32px;
-                object-fit: contain;
-            }
-            
-            .mobile-nav-title {
-                font-family: 'Montserrat', sans-serif;
-                font-weight: 800;
-                font-size: 18px;
-                color: #374151;
-                margin: 0;
-            }
-            
-            .nav-menu:not(.header-content > .nav-menu) .nav-item,
-            .nav-menu:not(.header-content > .nav-menu) .nav-item-audio {
-                width: 100%;
-                padding: 16px 20px;
-                margin: 0 0 8px 0;
-                border-radius: 12px;
-                background: #f8fafc;
-                border: 1px solid #e2e8f0;
-                transition: all 0.3s ease;
-                font-size: 16px;
-                font-weight: 600;
-                color: #475569;
-                justify-content: space-between;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            }
-            
-            .nav-menu:not(.header-content > .nav-menu) .nav-item:hover,
-            .nav-menu:not(.header-content > .nav-menu) .nav-item-audio:hover {
-                background: #e0f2fe;
-                border-color: #0891b2;
-                color: #0c4a6e;
-                transform: translateX(4px);
-                box-shadow: 0 4px 12px rgba(8, 145, 178, 0.15);
-            }
-            
-            .nav-menu:not(.header-content > .nav-menu) .nav-item .nav-item-text,
-            .nav-menu:not(.header-content > .nav-menu) .nav-item-audio .nav-item-text {
-                flex: 1;
-                text-align: left;
-            }
-            
-            .nav-menu:not(.header-content > .nav-menu) .nav-item .nav-item-icon,
-            .nav-menu:not(.header-content > .nav-menu) .nav-item-audio .nav-item-icon {
-                width: 20px;
-                height: 20px;
-                flex-shrink: 0;
-            }
-            
-            .nav-menu .nav-item::before,
-            .nav-menu .nav-item-audio::before {
+        /* Mobile nav menu styles - konversi ke Tailwind dengan CSS custom untuk pseudo-elements kompleks */
+        .nav-menu.open {
+            right: 0 !important;
+        }
+        
+        /* Backdrop overlay untuk mobile sidebar */
+        .nav-menu::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+        .nav-menu.open::before {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @media (min-width: 1024px) {
+            .nav-menu::before {
                 display: none;
             }
         }
         
-        @media (min-width: 1025px) {
-            .hamburger-menu {
-                display: none !important;
+        /* Safe area dan overflow fixes */
+        @media (max-width: 640px) {
+            .logo-section {
+                max-width: 60vw;
+                overflow: hidden;
             }
             
-            .mobile-nav-header {
-                display: none !important;
+            .logo-section .flex-col div {
+                font-size: clamp(8px, 2vw, 10px) !important;
+                line-height: 1.1 !important;
             }
         }
     </style>
@@ -166,157 +107,190 @@
 <body>
     
     <!-- Header with Tailwind CSS classes -->
-    <div class="relative w-full h-20 md:h-[70px] overflow-hidden z-[1000] shadow-[0px_1px_4px_rgba(0,0,0,0.25)]" style="background: url('{{ asset('images/navbar-pattern.png') }}') center/cover no-repeat;">
+    <div class="relative w-full h-20 md:h-[70px] overflow-hidden z-[1000] shadow-[0px_1px_4px_rgba(0,0,0,0.25)]" 
+         style="background: url('{{ asset('images/navbar-pattern.png') }}') center/cover no-repeat;">
         <!-- Background Pattern 1 -->
-        <div class="absolute w-[960px] h-[135px] -left-[400px] -top-[18px] opacity-5 rotate-90 transform-origin-top-left z-0 md:hidden" style="background: url('{{ asset('images/header.jpg') }}'); background-size: cover; background-position: center; transform: rotate(-90deg);"></div>
+        <div class="absolute w-[960px] h-[135px] -left-[400px] -top-[18px] opacity-5 -rotate-90 origin-top-left z-0 lg:hidden" 
+             style="background: url('{{ asset('images/header.jpg') }}') center/cover no-repeat;"></div>
         <!-- Background Pattern 2 -->
-        <div class="absolute w-[953px] h-[134px] left-[560px] -top-[18px] opacity-5 rotate-90 transform-origin-top-left z-0 md:hidden" style="background: url('{{ asset('images/header.jpg') }}'); background-size: cover; background-position: center; transform: rotate(-90deg);"></div>
+        <div class="absolute w-[953px] h-[134px] left-[560px] -top-[18px] opacity-5 -rotate-90 origin-top-left z-0 lg:hidden" 
+             style="background: url('{{ asset('images/header.jpg') }}') center/cover no-repeat;"></div>
 
         <!-- Header Content -->
-        <div class="relative max-w-screen-2xl w-full h-full mx-auto flex items-center justify-between px-[45px] z-[1] 
-                    2xl:px-5 xl:px-5 lg:px-5 md:px-[15px] md:justify-between sm:px-[15px] sm:justify-between">
+        <div class="relative w-full h-full mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-16 z-[1]">
             
             <!-- Logo Section -->
-            <div class="flex items-center gap-[15px] 2xl:gap-[10px] xl:gap-[10px] lg:gap-[10px] md:gap-2 sm:gap-2">
+            <div class="logo-section flex items-center gap-2 sm:gap-3 lg:gap-4 flex-shrink-0 min-w-0">
                 <img src="{{ asset('images/komdigi.png') }}" alt="Logo Kiri" 
-                     class="w-[30px] h-[30px] object-contain 
-                            2xl:w-[26px] 2xl:h-[26px] xl:w-[26px] xl:h-[26px] lg:w-[26px] lg:h-[26px] 
-                            md:w-6 md:h-6 sm:w-6 sm:h-6">
-                <div class="w-[3px] h-5 bg-[#D9D9D9] rounded-[32px]"></div>
+                     class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 xl:w-[30px] xl:h-[30px] object-contain flex-shrink-0">
+                <div class="w-[2px] lg:w-[3px] h-3 sm:h-4 lg:h-5 bg-[#D9D9D9] rounded-full flex-shrink-0"></div>
                 <img src="{{ asset('images/logokotametro.png') }}" alt="Logo Kota Metro" 
-                     class="w-[30px] h-10 object-contain 
-                            2xl:w-[26px] 2xl:h-[34px] xl:w-[26px] xl:h-[34px] lg:w-[26px] lg:h-[34px] 
-                            md:w-6 md:h-[30px] sm:w-6 sm:h-[30px]">
-                <div class="flex flex-col justify-center h-[60px] 2xl:h-11 xl:h-11 lg:h-11 md:h-10 sm:h-10">
-                    <div class="font-[Montserrat] font-extrabold text-base leading-[1.2] tracking-[0.02em] text-[#464646] whitespace-nowrap
-                               2xl:text-[11px] xl:text-[11px] lg:text-[11px] md:text-[10px] sm:text-[10px]">
+                     class="w-6 h-7 sm:w-7 sm:h-8 lg:w-8 lg:h-9 xl:w-[30px] xl:h-10 object-contain flex-shrink-0">
+                <div class="flex flex-col justify-center ml-1 sm:ml-2 lg:ml-3 min-w-0">
+                    <div class="font-[Montserrat] font-extrabold text-[10px] sm:text-xs lg:text-sm xl:text-base leading-tight tracking-wide text-[#464646] whitespace-nowrap">
                         PEMERINTAH KOTA METRO
                     </div>
-                    <div class="font-[Inter] font-extrabold text-[9px] leading-[1.2] tracking-[0.01em] text-[#464646] whitespace-nowrap
-                               2xl:text-[7px] xl:text-[7px] lg:text-[7px] md:text-[6px] sm:text-[6px]">
+                    <div class="font-[Inter] font-extrabold text-[6px] sm:text-[7px] lg:text-[8px] xl:text-[9px] leading-tight tracking-wide text-[#464646] whitespace-nowrap">
                         CCTV PINTAR KOTA BERBASIS KEWILAYAHAN
                     </div>
                 </div>
             </div>
 
             <!-- Desktop Navigation Menu -->
-            <div class="nav-menu flex items-center gap-5 h-[29px] 
-                        static !important w-auto !important h-auto !important bg-transparent !important 
-                        flex-row !important p-0 !important m-0 !important shadow-none !important 
-                        border-none !important z-auto !important transform-none !important 
-                        opacity-100 !important pointer-events-auto !important transition-none !important 
-                        overflow-visible !important
-                        2xl:gap-5 xl:gap-[15px] lg:gap-[15px] md:hidden sm:hidden" id="nav-menu">
+            <nav class="nav-menu hidden lg:flex lg:items-center lg:gap-3 xl:gap-4 2xl:gap-5 lg:flex-shrink-0 
+                        fixed lg:static top-0 right-[-100%] w-72 sm:w-80 lg:w-auto max-w-[85vw] lg:max-w-none 
+                        h-screen lg:h-auto bg-white/95 lg:bg-transparent 
+                        backdrop-blur-lg lg:backdrop-blur-none 
+                        flex-col lg:flex-row pt-0 lg:pt-0 px-0 lg:px-0 pb-0 lg:pb-0 
+                        gap-0 lg:gap-3 xl:gap-4 2xl:gap-5 
+                        shadow-[-8px_0_32px_rgba(0,0,0,0.12)] lg:shadow-none 
+                        border-l border-gray-200 lg:border-l-0 
+                        z-[2010] lg:z-auto 
+                        transition-[right] duration-300 ease-out lg:transition-none 
+                        overflow-y-auto lg:overflow-visible 
+                        justify-start lg:justify-center 
+                        items-stretch lg:items-center" id="nav-menu">
                 
-                <!-- Mobile Header - only visible in responsive mode -->
-                <div class="mobile-nav-header hidden">
-                    <img src="{{ asset('images/komdigi.png') }}" alt="Logo Komdigi" class="mobile-nav-logo">
-                    <h3 class="mobile-nav-title">Metro Maps</h3>
+                <!-- Mobile Header with Close Button -->
+                <div class="mobile-nav-header flex lg:hidden items-center justify-between p-4 border-b border-gray-200 bg-white">
+                    <div class="flex items-center gap-3">
+                        <img src="{{ asset('images/komdigi.png') }}" alt="Logo Komdigi" class="w-7 h-7 object-contain">
+                        <h3 class="font-[Montserrat] font-bold text-base text-gray-800 m-0">Metro Maps</h3>
+                    </div>
+                    <button class="close-sidebar-btn p-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-200" id="close-sidebar">
+                        <i data-lucide="x" class="w-5 h-5 text-gray-600"></i>
+                    </button>
                 </div>
                 
-                <a href="#" class="nav-item no-underline text-[#666666] font-[Inter] font-semibold text-sm leading-6 tracking-[-0.02em] 
-                           flex items-center gap-[5px] whitespace-nowrap relative pb-[5px] transition-colors duration-300 ease-in-out
-                           hover:text-black 2xl:text-[13px] xl:text-[13px] lg:text-[13px] md:text-xs sm:text-xs
+                <!-- Mobile Menu Items Container -->
+                <div class="mobile-menu-container flex flex-col p-4 gap-2 lg:hidden">
+                    <!-- Menu items akan diisi di sini -->
+                </div>
+                
+                
+                <a href="#" class="nav-item group no-underline text-gray-600 font-[Inter] font-medium text-sm xl:text-base 
+                           leading-relaxed flex items-center gap-2 whitespace-nowrap relative pb-1 
+                           transition-all duration-200 ease-out hover:text-gray-900
                            before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:scale-x-0 
-                           before:w-[90%] before:h-0.5 before:bg-black before:rounded-[1px] before:transition-transform before:duration-[400ms] before:ease-[cubic-bezier(0.4,0,0.2,1)] before:origin-center
-                           hover:before:scale-x-100 active:text-black active:before:scale-x-100 active:before:bg-black" 
+                           before:w-full before:h-0.5 before:bg-blue-500 before:rounded-full before:transition-transform before:duration-300 before:ease-out before:origin-center
+                           hover:before:scale-x-100
+                           lg:w-auto lg:p-0 lg:m-0 lg:rounded-none lg:bg-transparent lg:border-0 lg:shadow-none lg:justify-start
+                           w-full py-3 px-4 mb-1 rounded-lg bg-white border border-gray-100 text-gray-700 shadow-sm justify-between
+                           hover:lg:text-gray-900 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md" 
                            id="cctv-nav" onclick="showOnly('cctv')">
-                    <span class="nav-item-text">CCTV</span>
-                    <i data-lucide="cctv" class="nav-item-icon w-4 h-4 2xl:w-[14px] 2xl:h-[14px] xl:w-[14px] xl:h-[14px] lg:w-[14px] lg:h-[14px] md:w-3 md:h-3 sm:w-3 sm:h-3"></i>
+                    <span class="nav-item-text flex-1 lg:flex-none text-left lg:text-center">CCTV</span>
+                    <i data-lucide="cctv" class="nav-item-icon w-4 h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 flex-shrink-0"></i>
                 </a>
                 
-                <a href="#" class="nav-item no-underline text-[#666666] font-[Inter] font-semibold text-sm leading-6 tracking-[-0.02em] 
-                           flex items-center gap-[5px] whitespace-nowrap relative pb-[5px] transition-colors duration-300 ease-in-out
-                           hover:text-black 2xl:text-[13px] xl:text-[13px] lg:text-[13px] md:text-xs sm:text-xs
+                <a href="#" class="nav-item group no-underline text-gray-600 font-[Inter] font-medium text-sm xl:text-base 
+                           leading-relaxed flex items-center gap-2 whitespace-nowrap relative pb-1 
+                           transition-all duration-200 ease-out hover:text-gray-900
                            before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:scale-x-0 
-                           before:w-[90%] before:h-0.5 before:bg-black before:rounded-[1px] before:transition-transform before:duration-[400ms] before:ease-[cubic-bezier(0.4,0,0.2,1)] before:origin-center
-                           hover:before:scale-x-100 active:text-black active:before:scale-x-100 active:before:bg-black" 
+                           before:w-full before:h-0.5 before:bg-blue-500 before:rounded-full before:transition-transform before:duration-300 before:ease-out before:origin-center
+                           hover:before:scale-x-100
+                           lg:w-auto lg:p-0 lg:m-0 lg:rounded-none lg:bg-transparent lg:border-0 lg:shadow-none lg:justify-start
+                           w-full py-3 px-4 mb-1 rounded-lg bg-white border border-gray-100 text-gray-700 shadow-sm justify-between
+                           hover:lg:text-gray-900 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md" 
                            id="virtual-tour-nav" onclick="showOnly('virtual')">
-                    <span class="nav-item-text">Virtual Tour</span>
-                    <i data-lucide="binoculars" class="nav-item-icon w-4 h-4 2xl:w-[14px] 2xl:h-[14px] xl:w-[14px] xl:h-[14px] lg:w-[14px] lg:h-[14px] md:w-3 md:h-3 sm:w-3 sm:h-3"></i>
+                    <span class="nav-item-text flex-1 lg:flex-none text-left lg:text-center">Virtual Tour</span>
+                    <i data-lucide="binoculars" class="nav-item-icon w-4 h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 flex-shrink-0"></i>
                 </a>
                 
-                <a href="#" class="nav-item no-underline text-[#666666] font-[Inter] font-semibold text-sm leading-6 tracking-[-0.02em] 
-                           flex items-center gap-[5px] whitespace-nowrap relative pb-[5px] transition-colors duration-300 ease-in-out
-                           hover:text-black 2xl:text-[13px] xl:text-[13px] lg:text-[13px] md:text-xs sm:text-xs
+                <a href="#" class="nav-item group no-underline text-gray-600 font-[Inter] font-medium text-sm xl:text-base 
+                           leading-relaxed flex items-center gap-2 whitespace-nowrap relative pb-1 
+                           transition-all duration-200 ease-out hover:text-gray-900
                            before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:scale-x-0 
-                           before:w-[90%] before:h-0.5 before:bg-black before:rounded-[1px] before:transition-transform before:duration-[400ms] before:ease-[cubic-bezier(0.4,0,0.2,1)] before:origin-center
-                           hover:before:scale-x-100 active:text-black active:before:scale-x-100 active:before:bg-black" 
+                           before:w-full before:h-0.5 before:bg-blue-500 before:rounded-full before:transition-transform before:duration-300 before:ease-out before:origin-center
+                           hover:before:scale-x-100
+                           lg:w-auto lg:p-0 lg:m-0 lg:rounded-none lg:bg-transparent lg:border-0 lg:shadow-none lg:justify-start
+                           w-full py-3 px-4 mb-1 rounded-lg bg-white border border-gray-100 text-gray-700 shadow-sm justify-between
+                           hover:lg:text-gray-900 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md" 
                            id="pemerintahan-nav" onclick="showOnly('pemerintahan')">
-                    <span class="nav-item-text">Pemerintahan</span>
-                    <i data-lucide="building-2" class="nav-item-icon w-4 h-4 2xl:w-[14px] 2xl:h-[14px] xl:w-[14px] xl:h-[14px] lg:w-[14px] lg:h-[14px] md:w-3 md:h-3 sm:w-3 sm:h-3"></i>
+                    <span class="nav-item-text flex-1 lg:flex-none text-left lg:text-center">Pemerintahan</span>
+                    <i data-lucide="building-2" class="nav-item-icon w-4 h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 flex-shrink-0"></i>
                 </a>
                 
-                <a href="#" class="nav-item no-underline text-[#666666] font-[Inter] font-semibold text-sm leading-6 tracking-[-0.02em] 
-                           flex items-center gap-[5px] whitespace-nowrap relative pb-[5px] transition-colors duration-300 ease-in-out
-                           hover:text-black 2xl:text-[13px] xl:text-[13px] lg:text-[13px] md:text-xs sm:text-xs
+                <a href="#" class="nav-item group no-underline text-gray-600 font-[Inter] font-medium text-sm xl:text-base 
+                           leading-relaxed flex items-center gap-2 whitespace-nowrap relative pb-1 
+                           transition-all duration-200 ease-out hover:text-gray-900
                            before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:scale-x-0 
-                           before:w-[90%] before:h-0.5 before:bg-black before:rounded-[1px] before:transition-transform before:duration-[400ms] before:ease-[cubic-bezier(0.4,0,0.2,1)] before:origin-center
-                           hover:before:scale-x-100 active:text-black active:before:scale-x-100 active:before:bg-black" 
+                           before:w-full before:h-0.5 before:bg-blue-500 before:rounded-full before:transition-transform before:duration-300 before:ease-out before:origin-center
+                           hover:before:scale-x-100
+                           lg:w-auto lg:p-0 lg:m-0 lg:rounded-none lg:bg-transparent lg:border-0 lg:shadow-none lg:justify-start
+                           w-full py-3 px-4 mb-1 rounded-lg bg-white border border-gray-100 text-gray-700 shadow-sm justify-between
+                           hover:lg:text-gray-900 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md" 
                            id="pendidikan-nav" onclick="showOnly('pendidikan')">
-                    <span class="nav-item-text">Pendidikan</span>
-                    <i data-lucide="university" class="nav-item-icon w-4 h-4 2xl:w-[14px] 2xl:h-[14px] xl:w-[14px] xl:h-[14px] lg:w-[14px] lg:h-[14px] md:w-3 md:h-3 sm:w-3 sm:h-3"></i>
+                    <span class="nav-item-text flex-1 lg:flex-none text-left lg:text-center">Pendidikan</span>
+                    <i data-lucide="university" class="nav-item-icon w-4 h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 flex-shrink-0"></i>
                 </a>
                 
-                <a href="#" class="nav-item no-underline text-[#666666] font-[Inter] font-semibold text-sm leading-6 tracking-[-0.02em] 
-                           flex items-center gap-[5px] whitespace-nowrap relative pb-[5px] transition-colors duration-300 ease-in-out
-                           hover:text-black 2xl:text-[13px] xl:text-[13px] lg:text-[13px] md:text-xs sm:text-xs
+                <a href="#" class="nav-item group no-underline text-gray-600 font-[Inter] font-medium text-sm xl:text-base 
+                           leading-relaxed flex items-center gap-2 whitespace-nowrap relative pb-1 
+                           transition-all duration-200 ease-out hover:text-gray-900
                            before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:scale-x-0 
-                           before:w-[90%] before:h-0.5 before:bg-black before:rounded-[1px] before:transition-transform before:duration-[400ms] before:ease-[cubic-bezier(0.4,0,0.2,1)] before:origin-center
-                           hover:before:scale-x-100 active:text-black active:before:scale-x-100 active:before:bg-black" 
+                           before:w-full before:h-0.5 before:bg-blue-500 before:rounded-full before:transition-transform before:duration-300 before:ease-out before:origin-center
+                           hover:before:scale-x-100
+                           lg:w-auto lg:p-0 lg:m-0 lg:rounded-none lg:bg-transparent lg:border-0 lg:shadow-none lg:justify-start
+                           w-full py-3 px-4 mb-1 rounded-lg bg-white border border-gray-100 text-gray-700 shadow-sm justify-between
+                           hover:lg:text-gray-900 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md" 
                            id="kesehatan-nav" onclick="showOnly('kesehatan')">
-                    <span class="nav-item-text">Kesehatan</span>
-                    <i data-lucide="hospital" class="nav-item-icon w-4 h-4 2xl:w-[14px] 2xl:h-[14px] xl:w-[14px] xl:h-[14px] lg:w-[14px] lg:h-[14px] md:w-3 md:h-3 sm:w-3 sm:h-3"></i>
+                    <span class="nav-item-text flex-1 lg:flex-none text-left lg:text-center">Kesehatan</span>
+                    <i data-lucide="hospital" class="nav-item-icon w-4 h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 flex-shrink-0"></i>
                 </a>
                 
-                <a href="#" class="nav-item no-underline text-[#666666] font-[Inter] font-semibold text-sm leading-6 tracking-[-0.02em] 
-                           flex items-center gap-[5px] whitespace-nowrap relative pb-[5px] transition-colors duration-300 ease-in-out
-                           hover:text-black 2xl:text-[13px] xl:text-[13px] lg:text-[13px] md:text-xs sm:text-xs
+                <a href="#" class="nav-item group no-underline text-gray-600 font-[Inter] font-medium text-sm xl:text-base 
+                           leading-relaxed flex items-center gap-2 whitespace-nowrap relative pb-1 
+                           transition-all duration-200 ease-out hover:text-gray-900
                            before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:scale-x-0 
-                           before:w-[90%] before:h-0.5 before:bg-black before:rounded-[1px] before:transition-transform before:duration-[400ms] before:ease-[cubic-bezier(0.4,0,0.2,1)] before:origin-center
-                           hover:before:scale-x-100 active:text-black active:before:scale-x-100 active:before:bg-black" 
+                           before:w-full before:h-0.5 before:bg-blue-500 before:rounded-full before:transition-transform before:duration-300 before:ease-out before:origin-center
+                           hover:before:scale-x-100
+                           lg:w-auto lg:p-0 lg:m-0 lg:rounded-none lg:bg-transparent lg:border-0 lg:shadow-none lg:justify-start
+                           w-full py-3 px-4 mb-1 rounded-lg bg-white border border-gray-100 text-gray-700 shadow-sm justify-between
+                           hover:lg:text-gray-900 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md" 
                            id="layanan-nav" onclick="showOnly('layanan')">
-                    <span class="nav-item-text">Layanan Publik</span>
-                    <i data-lucide="users" class="nav-item-icon w-4 h-4 2xl:w-[14px] 2xl:h-[14px] xl:w-[14px] xl:h-[14px] lg:w-[14px] lg:h-[14px] md:w-3 md:h-3 sm:w-3 sm:h-3"></i>
+                    <span class="nav-item-text flex-1 lg:flex-none text-left lg:text-center">Layanan Publik</span>
+                    <i data-lucide="users" class="nav-item-icon w-4 h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 flex-shrink-0"></i>
                 </a>
                 
-                <a href="#" class="nav-item no-underline text-[#666666] font-[Inter] font-semibold text-sm leading-6 tracking-[-0.02em] 
-                           flex items-center gap-[5px] whitespace-nowrap relative pb-[5px] transition-colors duration-300 ease-in-out
-                           hover:text-black 2xl:text-[13px] xl:text-[13px] lg:text-[13px] md:text-xs sm:text-xs
+                <a href="#" class="nav-item group no-underline text-gray-600 font-[Inter] font-medium text-sm xl:text-base 
+                           leading-relaxed flex items-center gap-2 whitespace-nowrap relative pb-1 
+                           transition-all duration-200 ease-out hover:text-gray-900
                            before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:scale-x-0 
-                           before:w-[90%] before:h-0.5 before:bg-black before:rounded-[1px] before:transition-transform before:duration-[400ms] before:ease-[cubic-bezier(0.4,0,0.2,1)] before:origin-center
-                           hover:before:scale-x-100 active:text-black active:before:scale-x-100 active:before:bg-black" 
+                           before:w-full before:h-0.5 before:bg-blue-500 before:rounded-full before:transition-transform before:duration-300 before:ease-out before:origin-center
+                           hover:before:scale-x-100
+                           lg:w-auto lg:p-0 lg:m-0 lg:rounded-none lg:bg-transparent lg:border-0 lg:shadow-none lg:justify-start
+                           w-full py-3 px-4 mb-1 rounded-lg bg-white border border-gray-100 text-gray-700 shadow-sm justify-between
+                           hover:lg:text-gray-900 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md" 
                            id="pangan-nav" onclick="showOnly('pangan')">
-                    <span class="nav-item-text">Pangan</span>
-                    <i data-lucide="wheat" class="nav-item-icon w-4 h-4 2xl:w-[14px] 2xl:h-[14px] xl:w-[14px] xl:h-[14px] lg:w-[14px] lg:h-[14px] md:w-3 md:h-3 sm:w-3 sm:h-3"></i>
+                    <span class="nav-item-text flex-1 lg:flex-none text-left lg:text-center">Pangan</span>
+                    <i data-lucide="wheat" class="nav-item-icon w-4 h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 flex-shrink-0"></i>
                 </a>
                 
-                <a href="#" class="nav-item-audio no-underline text-[#666666] font-[Inter] font-semibold text-sm leading-6 tracking-[-0.02em] 
-                           flex items-center gap-[5px] whitespace-nowrap relative pb-[5px] transition-colors duration-300 ease-in-out
-                           hover:text-black 2xl:text-[13px] xl:text-[13px] lg:text-[13px] md:text-xs sm:text-xs
+                <a href="#" class="nav-item-audio group no-underline text-gray-600 font-[Inter] font-medium text-sm xl:text-base 
+                           leading-relaxed flex items-center gap-2 whitespace-nowrap relative pb-1 
+                           transition-all duration-200 ease-out hover:text-gray-900
                            before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:scale-x-0 
-                           before:w-[90%] before:h-0.5 before:bg-black before:rounded-[1px] before:transition-transform before:duration-[400ms] before:ease-[cubic-bezier(0.4,0,0.2,1)] before:origin-center
-                           hover:before:scale-x-100 active:text-black active:before:scale-x-100 active:before:bg-black" 
+                           before:w-full before:h-0.5 before:bg-blue-500 before:rounded-full before:transition-transform before:duration-300 before:ease-out before:origin-center
+                           hover:before:scale-x-100
+                           lg:w-auto lg:p-0 lg:m-0 lg:rounded-none lg:bg-transparent lg:border-0 lg:shadow-none lg:justify-start
+                           w-full py-3 px-4 mb-1 rounded-lg bg-white border border-gray-100 text-gray-700 shadow-sm justify-between
+                           hover:lg:text-gray-900 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md" 
                            id="audio-toggle-link">
-                    <span class="nav-item-text"></span>
-                    <i data-lucide="volume-off" class="nav-item-icon w-4 h-4 2xl:w-[14px] 2xl:h-[14px] xl:w-[14px] xl:h-[14px] lg:w-[14px] lg:h-[14px] md:w-3 md:h-3 sm:w-3 sm:h-3" id="audio-toggle-icon"></i>
+                    <span class="nav-item-text sr-only lg:not-sr-only flex-1 lg:flex-none text-left lg:text-center">Audio</span>
+                    <i data-lucide="volume-off" class="nav-item-icon w-4 h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 flex-shrink-0" id="audio-toggle-icon"></i>
                 </a>
-            </div>
+            </nav>
             
             <!-- Hamburger Menu Button -->
-            <button class="hamburger-menu hidden flex-col justify-center items-center w-[42px] h-[42px] cursor-pointer z-[2015] 
-                           bg-white/95 border border-black/10 rounded-lg ml-5 transition-all duration-200 ease-in-out 
-                           shadow-[0_2px_8px_rgba(0,0,0,0.1)] relative
+            <button class="hamburger-menu lg:hidden flex flex-col justify-center items-center w-9 h-9 sm:w-10 sm:h-10 cursor-pointer z-[2015] 
+                           bg-white/95 border border-black/10 rounded-lg transition-all duration-200 ease-in-out 
+                           shadow-[0_2px_8px_rgba(0,0,0,0.1)] relative flex-shrink-0
                            hover:bg-blue-500/15 hover:border-blue-500/30 hover:scale-105 hover:shadow-[0_4px_12px_rgba(59,130,246,0.2)]
-                           active:bg-blue-500/10 active:border-blue-500/30
-                           2xl:flex xl:flex lg:flex md:flex sm:flex" 
+                           active:bg-blue-500/10 active:border-blue-500/30" 
                            id="hamburger-menu" aria-label="Toggle navigation">
-                <span class="block w-6 h-[3px] bg-gray-700 rounded-[2px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] my-[3px] origin-center 
-                             hamburger-menu.active:rotate-45 hamburger-menu.active:translate-x-[7px] hamburger-menu.active:translate-y-[7px] hamburger-menu.active:bg-blue-500"></span>
-                <span class="block w-6 h-[3px] bg-gray-700 rounded-[2px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] my-[3px] origin-center 
-                             hamburger-menu.active:opacity-0 hamburger-menu.active:scale-[0.2]"></span>
-                <span class="block w-6 h-[3px] bg-gray-700 rounded-[2px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] my-[3px] origin-center 
-                             hamburger-menu.active:-rotate-45 hamburger-menu.active:translate-x-[7px] hamburger-menu.active:-translate-y-[7px] hamburger-menu.active:bg-blue-500"></span>
+                <span class="block w-4 h-[2px] sm:w-5 sm:h-[2px] bg-gray-700 rounded-[1px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] my-[2px] origin-center"></span>
+                <span class="block w-4 h-[2px] sm:w-5 sm:h-[2px] bg-gray-700 rounded-[1px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] my-[2px] origin-center"></span>
+                <span class="block w-4 h-[2px] sm:w-5 sm:h-[2px] bg-gray-700 rounded-[1px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] my-[2px] origin-center"></span>
             </button>
         </div>
     </div>
@@ -425,6 +399,40 @@
     <script>
         // Initialize markers after map.js loads
         document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu functionality
+            const hamburgerMenu = document.getElementById('hamburger-menu');
+            const navMenu = document.getElementById('nav-menu');
+            const closeSidebar = document.getElementById('close-sidebar');
+            
+            function toggleNavMenu() {
+                hamburgerMenu.classList.toggle('active');
+                navMenu.classList.toggle('open');
+                document.body.classList.toggle('menu-open');
+            }
+            
+            function closeNavMenu() {
+                hamburgerMenu.classList.remove('active');
+                navMenu.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            }
+            
+            hamburgerMenu.addEventListener('click', toggleNavMenu);
+            closeSidebar.addEventListener('click', closeNavMenu);
+            
+            // Close menu when clicking on backdrop
+            navMenu.addEventListener('click', function(e) {
+                if (e.target === navMenu) {
+                    closeNavMenu();
+                }
+            });
+            
+            // Close menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+                    closeNavMenu();
+                }
+            });
+            
             // Wait for map to be initialized
             setTimeout(() => {
                 // Add CCTV markers

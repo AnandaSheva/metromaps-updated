@@ -17,231 +17,9 @@ body.menu-open {
     overflow: hidden !important; /* Prevent scroll on mobile when menu is open */
 }
 
-.header {
-    position: relative;
-    width: 100%;
-    height: 80px;
-    background: url('../images/navbar-pattern.png') center/cover no-repeat;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
-    z-index: 1000;
-    overflow: hidden;
-}
+/* Header CSS styles removed - now using Tailwind CSS classes */
 
-.bg-pattern-1 {
-    position: absolute;
-    width: 960px;
-    height: 135px;
-    left: -400px;
-    top: -18px;
-    background: url('../images/header.jpg');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.05;
-    transform: rotate(-90deg);
-    transform-origin: top left;
-    z-index: 0;
-}
-
-.bg-pattern-2 {
-    position: absolute;
-    width: 953px;
-    height: 134px;
-    left: 560px;
-    top: -18px;
-    background: url('../images/header.jpg');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.05;
-    transform: rotate(-90deg);
-    transform-origin: top left;
-    z-index: 0;
-}
-
-.header-content {
-    position: relative;
-    max-width: 1920px;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 45px;
-    z-index: 1;
-}
-
-.logo-section {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.logo-image-5 {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-}
-
-.vertical-separator {
-    width: 3px;
-    height: 20px;
-    background: #D9D9D9;
-    border-radius: 32px;
-}
-
-.logo-kotametro {
-    width: 30px;
-    height: 40px;
-    object-fit: contain;
-}
-
-.logo-text-group {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 60px;
-}
-
-.main-title-header {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: 16px;
-    line-height: 1.2;
-    letter-spacing: 0.02em;
-    color: #464646;
-    white-space: nowrap;
-}
-
-.sub-title-header {
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 9px;
-    line-height: 1.2;
-    letter-spacing: 0.01em;
-    color: #464646;
-    white-space: nowrap;
-}
-
-/* Default desktop navigation menu */
-.nav-menu {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    height: 29px;
-    /* Ensure these are not overridden by mobile styles on desktop */
-    position: static !important;
-    width: auto !important;
-    height: auto !important;
-    background: transparent !important;
-    flex-direction: row !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-    z-index: auto !important;
-    transform: none !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    transition: none !important;
-    overflow: visible !important;
-}
-
-.nav-item {
-    text-decoration: none;
-    color: #666666;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 24px;
-    letter-spacing: -0.02em;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    white-space: nowrap;
-    position: relative;
-    padding-bottom: 5px;
-    transition: color 0.3s ease;
-}
-
-.nav-item::before {
-    content: "";
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 90%;
-    height: 2px;
-    background: #000000;
-    border-radius: 1px;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-}
-
-.nav-item:hover {
-    color: #000;
-}
-
-.nav-item:hover::before {
-    transform: translateX(-50%) scaleX(1);
-}
-
-.nav-item.active {
-    color: #000;
-}
-
-.nav-item.active::before {
-    transform: translateX(-50%) scaleX(1);
-    background: #000000;
-}
-
-/* CSS untuk Audio Icon */
-.nav-item-audio {
-    text-decoration: none;
-    color: #666666;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 24px;
-    letter-spacing: -0.02em;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    white-space: nowrap;
-    position: relative;
-    padding-bottom: 5px;
-    transition: color 0.3s ease;
-}
-
-.nav-item-audio::before {
-    content: "";
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 90%;
-    height: 2px;
-    background: #000000;
-    border-radius: 1px;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-}
-
-.nav-item-audio:hover {
-    color: #000;
-}
-
-.nav-item-audio:hover::before {
-    transform: translateX(-50%) scaleX(1);
-}
-
-.nav-item-audio.active {
-    color: #000;
-}
-
-.nav-item-audio.active::before {
-    transform: translateX(-50%) scaleX(1);
-    background: #000000;
-}
+/* Navigation CSS styles removed - now using Tailwind CSS classes */
 
 #map {
     height: calc(100vh - 80px);
@@ -561,136 +339,9 @@ body.menu-open {
     }
 }
 
-@media (max-width: 1300px) {
-    .nav-menu {
-        gap: 15px;
-    }
-    .nav-item {
-        font-size: 13px;
-    }
-    .nav-item-icon {
-        width: 14px;
-        height: 14px;
-    }
-}
+/* Responsive header styles removed - now using Tailwind CSS responsive classes */
 
-@media (max-width: 1024px) {
-    .header-content {
-        padding: 0 20px;
-    }
-    .logo-section {
-        gap: 10px;
-    }
-    .main-title-header {
-        font-size: 11px;
-    }
-    .sub-title-header {
-        font-size: 7px;
-    }
-    /* Default: Hide desktop nav menu on mobile, but not mobile sidebar */
-    .header-content > .nav-menu {
-        display: none !important; 
-    }
-    .nav-item {
-        font-size: 12px;
-    }
-    .nav-item-icon {
-        width: 12px;
-        height: 12px;
-    }
-    .logo-image-5 {
-        width: 26px;
-        height: 26px;
-    }
-    .logo-kotametro {
-        width: 26px;
-        height: 34px;
-    }
-    .logo-text-group {
-        height: 44px;
-    }
-    .bg-pattern-1, .bg-pattern-2 {
-        display: none;
-    }
-
-    /* Show mobile header */
-    .mobile-nav-header {
-        display: flex; /* Changed from none to flex here */
-    }
-}
-
-@media (max-width: 768px) {
-    .header {
-        height: 70px;
-    }
-    .header-content {
-        padding: 0 15px;
-        justify-content: space-between;
-    }
-    .logo-section {
-        gap: 8px;
-    }
-    .main-title-header {
-        font-size: 10px;
-    }
-    .sub-title-header {
-        font-size: 6px;
-    }
-    .logo-image-5 {
-        width: 24px;
-        height: 24px;
-    }
-    .logo-kotametro {
-        width: 24px;
-        height: 30px;
-    }
-    .logo-text-group {
-        height: 40px;
-    }
-    .nav-item-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    #map {
-        height: calc(100vh - 70px);
-        top: 70px;
-    }
-}
-
-@media (max-width: 480px) {
-    .header {
-        height: 60px;
-    }
-    .header-content {
-        padding: 0 12px;
-    }
-    .logo-section {
-        gap: 6px;
-    }
-    .main-title-header {
-        font-size: 9px;
-    }
-    .sub-title-header {
-        font-size: 5px;
-    }
-    .logo-image-5 {
-        width: 22px;
-        height: 22px;
-    }
-    .logo-kotametro {
-        width: 22px;
-        height: 28px;
-    }
-    .logo-text-group {
-        height: 36px;
-    }
-    
-    #map {
-        height: calc(100vh - 60px);
-        top: 60px;
-    }
-}
+/* Additional responsive header styles removed - now using Tailwind CSS responsive classes */
 
 /* Universal List Container Component */
 .list-container {
@@ -1442,74 +1093,11 @@ body.menu-open {
 
 /* ===== RESPONSIVE NAVBAR SYSTEM ===== */
 
-/* Hamburger menu - HIDDEN on desktop screens, shown on mobile */
-.hamburger-menu {
-    display: none; /* Default to hidden */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 42px;
-    height: 42px;
-    cursor: pointer;
-    z-index: 2015;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin-left: 20px;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-.hamburger-menu:hover {
-    background: rgba(59, 130, 246, 0.15);
-    border-color: rgba(59, 130, 246, 0.3);
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-}
-
-.hamburger-menu span {
-    display: block;
-    width: 24px;
-    height: 3px;
-    background: #374151;
-    border-radius: 2px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    margin: 3px 0;
-    transform-origin: center;
-}
-
-.hamburger-menu.active span:nth-child(1) {
-    transform: rotate(45deg) translate(7px, 7px);
-    background: #3b82f6;
-}
-
-.hamburger-menu.active span:nth-child(2) {
-    opacity: 0;
-    transform: scale(0.2);
-}
-
-.hamburger-menu.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -7px);
-    background: #3b82f6;
-}
-
-.hamburger-menu.active {
-    background: rgba(59, 130, 246, 0.1);
-    border-color: rgba(59, 130, 246, 0.3);
-}
+/* Hamburger menu styles removed - now using Tailwind CSS classes */
 
 /* ===== MOBILE RESPONSIVE NAVIGATION ===== */
 @media (max-width: 1024px) {
-    /* Hide desktop navigation, show hamburger */
-    .header-content > .nav-menu {
-        display: none !important;
-    }
-    
-    .hamburger-menu {
-        display: flex !important; /* Show hamburger on mobile */
-        z-index: 2050;
-    }
+    /* Navigation responsive adjustments removed - now using Tailwind CSS */
     
     /* Transform nav-menu into mobile sidebar - Override any display:none from previous rules */
     .nav-menu:not(.header-content > .nav-menu) {
@@ -1666,16 +1254,7 @@ body.menu-open {
         min-height: 56px !important;
     }
     
-    .hamburger-menu {
-        width: 38px !important;
-        height: 38px !important;
-        margin-left: 15px !important;
-    }
-    
-    .hamburger-menu span {
-        width: 20px !important;
-        height: 2.5px !important;
-    }
+    /* Hamburger responsive styles removed - now using Tailwind CSS */
 }
 
 @media (max-width: 480px) {
@@ -1694,16 +1273,7 @@ body.menu-open {
         min-height: 52px !important;
     }
     
-    .hamburger-menu {
-        width: 36px !important;
-        height: 36px !important;
-        margin-left: 12px !important;
-    }
-    
-    .hamburger-menu span {
-        width: 18px !important;
-        height: 2px !important;
-    }
+    /* More hamburger responsive styles removed - now using Tailwind CSS */
 }
 
 /* Body scroll lock when menu is open */
@@ -1713,35 +1283,9 @@ body.menu-open {
 
 /* ===== DESKTOP BREAKPOINT - FORCE HIDE HAMBURGER ===== */
 @media (min-width: 1025px) {
-    /* Force hamburger menu to be completely hidden on desktop */
-    .hamburger-menu {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-    }
+/* Desktop breakpoint hamburger styles removed - now using Tailwind CSS responsive classes */
     
-    /* Ensure desktop navigation is always visible */
-    .header-content > .nav-menu {
-        display: flex !important;
-        position: static !important;
-        width: auto !important;
-        height: auto !important;
-        background: transparent !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        gap: 20px !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        box-shadow: none !important;
-        border: none !important;
-        z-index: auto !important;
-        transform: none !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
-        transition: none !important;
-        overflow: visible !important;
-    }
+    /* Desktop navigation styles removed - now using Tailwind CSS */
     
     /* Ensure mobile header is hidden on desktop */
     .mobile-nav-header {
