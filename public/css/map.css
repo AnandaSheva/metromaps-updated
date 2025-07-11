@@ -12,6 +12,11 @@ body {
     overflow: hidden; /* Mencegah scroll */
 }
 
+/* Add this to allow body scrolling when menu is open on mobile */
+body.menu-open {
+    overflow: hidden !important; /* Prevent scroll on mobile when menu is open */
+}
+
 .header {
     position: relative;
     width: 100%;
@@ -117,11 +122,28 @@ body {
     white-space: nowrap;
 }
 
+/* Default desktop navigation menu */
 .nav-menu {
     display: flex;
     align-items: center;
     gap: 20px;
     height: 29px;
+    /* Ensure these are not overridden by mobile styles on desktop */
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    flex-direction: row !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    z-index: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transition: none !important;
+    overflow: visible !important;
 }
 
 .nav-item {
@@ -149,7 +171,7 @@ body {
     transform: translateX(-50%) scaleX(0);
     width: 90%;
     height: 2px;
-    background: #000000; /* Ubah dari gradient biru ke hitam */
+    background: #000000;
     border-radius: 1px;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
@@ -163,17 +185,16 @@ body {
     transform: translateX(-50%) scaleX(1);
 }
 
-/* Gaya untuk item navigasi yang aktif */
 .nav-item.active {
     color: #000;
 }
 
 .nav-item.active::before {
     transform: translateX(-50%) scaleX(1);
-    background: #000000; /* Pastikan warna aktif juga hitam */
+    background: #000000;
 }
 
-/* CSS untuk Audio Icon - tanpa animasi garis bawah */
+/* CSS untuk Audio Icon */
 .nav-item-audio {
     text-decoration: none;
     color: #666666;
@@ -191,7 +212,6 @@ body {
     transition: color 0.3s ease;
 }
 
-/* Tambahkan efek garis bawah untuk audio seperti nav-item lainnya */
 .nav-item-audio::before {
     content: "";
     position: absolute;
@@ -243,13 +263,32 @@ body {
     z-index: 999;
 }
 
-/* Penyesuaian kontrol zoom untuk mobile */
+/* Penyesuaian kontrol zoom untuk tablet landscape */
+@media (max-width: 1024px) {
+    .leaflet-control-zoom {
+        top: 90px !important;
+        left: 15px !important;
+        z-index: 1001;
+    }
+}
+
+/* Penyesuaian kontrol zoom untuk tablet portrait dan mobile landscape */
 @media (max-width: 768px) {
     .leaflet-control-zoom {
         top: 20px !important;
-        right: 20px !important;
+        right: 15px !important;
         left: unset !important;
-        z-index: 1002; /* Pastikan di atas container */
+        z-index: 1002;
+    }
+}
+
+/* Penyesuaian kontrol zoom untuk mobile portrait */
+@media (max-width: 480px) {
+    .leaflet-control-zoom {
+        top: 15px !important;
+        right: 10px !important;
+        left: unset !important;
+        z-index: 1002;
     }
 }
 
@@ -329,7 +368,7 @@ body {
 /* Responsive styles for legend */
 @media (max-width: 1024px) {
     #legend {
-        bottom: 85px;
+        bottom: 110px;
         left: 15px;
         padding: 12px 20px;
         max-width: 320px;
@@ -356,7 +395,7 @@ body {
 @media (max-width: 768px) {
     #legend {
         position: fixed;
-        bottom: 135px;
+        bottom: 130px;
         left: 15px;
         right: 15px;
         max-width: calc(100vw - 30px);
@@ -385,7 +424,7 @@ body {
 
 @media (max-width: 480px) {
     #legend {
-        bottom: 115px;
+        bottom: 100px;
         left: 10px;
         right: 10px;
         max-width: calc(100vw - 20px);
@@ -548,8 +587,9 @@ body {
     .sub-title-header {
         font-size: 7px;
     }
-    .nav-menu {
-        gap: 10px;
+    /* Default: Hide desktop nav menu on mobile, but not mobile sidebar */
+    .header-content > .nav-menu {
+        display: none !important; 
     }
     .nav-item {
         font-size: 12px;
@@ -568,6 +608,14 @@ body {
     }
     .logo-text-group {
         height: 44px;
+    }
+    .bg-pattern-1, .bg-pattern-2 {
+        display: none;
+    }
+
+    /* Show mobile header */
+    .mobile-nav-header {
+        display: flex; /* Changed from none to flex here */
     }
 }
 
@@ -598,9 +646,6 @@ body {
     }
     .logo-text-group {
         height: 40px;
-    }
-    .bg-pattern-1, .bg-pattern-2 {
-        display: none;
     }
     .nav-item-icon {
         width: 16px;
@@ -649,19 +694,19 @@ body {
 
 /* Universal List Container Component */
 .list-container {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.8);
     padding: 0;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     position: absolute;
-    z-index: 1000; /* Lower than navbar */
+    z-index: 1000;
     display: none;
     height: auto;
     max-height: 280px;
     overflow: hidden;
     font-family: 'Poppins', sans-serif;
     width: 280px;
-    transition: all 0.3s ease; /* Smooth transitions */
+    transition: all 0.3s ease;
 }
 
 /* Container Positioning Variants */
@@ -902,13 +947,13 @@ body {
 @media (max-width: 1024px) {
     .list-container.primary {
         position: fixed;
-        bottom: 20px; /* Posisi kiri bawah */
+        bottom: 20px;
         left: 15px;
-        width: 240px; /* Smaller width for mobile */
-        max-height: 200px; /* Reduced height */
+        width: 240px;
+        max-height: 200px;
         height: auto;
         padding: 0;
-        z-index: 1000; /* Much lower than navbar (2000) */
+        z-index: 1000;
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
         background: rgba(255, 255, 255, 0.98);
@@ -933,7 +978,7 @@ body {
     /* Virtual tour container specific positioning */
     #virtual-tour-container.primary {
         position: fixed;
-        bottom: 20px; /* Same as CCTV container - pojok kiri bawah */
+        bottom: 20px;
         left: 15px;
         width: 240px;
         max-height: 180px;
@@ -1002,7 +1047,7 @@ body {
     }
     
     .list-container.secondary, #virtual-tour-container.primary {
-        bottom: 20px; /* Same as primary container - pojok kiri bawah */
+        bottom: 20px;
         left: 12px;
         width: 220px;
         max-height: 160px;
@@ -1024,7 +1069,7 @@ body {
     }
     
     .list-container.secondary, #virtual-tour-container.primary {
-        bottom: 15px; /* Same as primary container - pojok kiri bawah */
+        bottom: 15px;
         left: 10px;
         width: 200px;
         max-height: 140px;
@@ -1097,23 +1142,23 @@ body {
 /* Responsive adjustments for the audio icon section */
 @media (max-width: 1024px) {
     .audio-icon-section {
-        right: 20px; /* Adjust for smaller screens based on header-content padding */
+        right: 20px;
     }
 }
 
 @media (max-width: 768px) {
     .audio-icon-section {
-        top: auto; /* Remove fixed top position */
-        bottom: 140px; /* Position above map zoom controls on smaller screens */
-        left: 20px; /* Move to left to avoid conflict with diskominfo logo */
-        right: auto; /* Remove right position */
+        top: auto;
+        bottom: 140px;
+        left: 20px;
+        right: auto;
     }
 }
 
 @media (max-width: 480px) {
     .audio-icon-section {
-        bottom: 120px; /* Further adjustment for very small screens */
-        left: 15px; /* Further adjustment for very small screens */
+        bottom: 120px;
+        left: 15px;
     }
 }
 
@@ -1344,261 +1389,407 @@ body {
     }
 }
 
-/* ===== Responsive Navbar with Hamburger Menu ===== */
-.hamburger-menu {
+/* ===== Mobile Navigation Header ===== */
+.mobile-nav-header {
     display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 20px 12px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    margin: 0;
+    width: 100%;
+    background: #ffffff;
+    position: relative;
+    z-index: 2001;
+    flex-shrink: 0;
+}
+
+.mobile-nav-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    margin-bottom: 6px;
+}
+
+.mobile-nav-title {
+    color: #1f2937;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    margin: 0;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+/* Show mobile header only in responsive nav menu */
+@media (max-width: 1024px) {
+    .mobile-nav-header {
+        display: flex !important;
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #f8fafc;
+        border-bottom: 2px solid #e5e7eb;
+        z-index: 2021;
+        margin: 0;
+        width: 100%;
+        padding: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* ===== RESPONSIVE NAVBAR SYSTEM ===== */
+
+/* Hamburger menu - HIDDEN on desktop screens, shown on mobile */
+.hamburger-menu {
+    display: none; /* Default to hidden */
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 42px;
     height: 42px;
     cursor: pointer;
-    z-index: 2002;
+    z-index: 2015;
     background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-left: 20px;
     transition: all 0.2s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
+
 .hamburger-menu:hover {
     background: rgba(59, 130, 246, 0.15);
     border-color: rgba(59, 130, 246, 0.3);
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
+
 .hamburger-menu span {
     display: block;
     width: 24px;
     height: 3px;
-    margin: 3px 0;
-    background: #333;
+    background: #374151;
     border-radius: 2px;
-    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 3px 0;
+    transform-origin: center;
 }
+
 .hamburger-menu.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
+    transform: rotate(45deg) translate(7px, 7px);
     background: #3b82f6;
 }
+
 .hamburger-menu.active span:nth-child(2) {
     opacity: 0;
+    transform: scale(0.2);
 }
+
 .hamburger-menu.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+    transform: rotate(-45deg) translate(7px, -7px);
     background: #3b82f6;
 }
+
 .hamburger-menu.active {
     background: rgba(59, 130, 246, 0.1);
     border-color: rgba(59, 130, 246, 0.3);
 }
 
+/* ===== MOBILE RESPONSIVE NAVIGATION ===== */
 @media (max-width: 1024px) {
-    .nav-menu {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 280px;
-        background: #ffffff;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0;
-        padding: 90px 0 30px 0;
-        box-shadow: -4px 0 25px rgba(0,0,0,0.2);
-        border-left: 2px solid #e5e7eb;
-        z-index: 2000;
-        transform: translateX(100%);
-        opacity: 1;
-        pointer-events: none;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .nav-menu.open {
-        transform: translateX(0);
-        pointer-events: auto;
-    }
-    .nav-item, .nav-item-audio {
-        width: 100%;
-        padding: 16px 24px;
-        font-size: 15px;
-        border-bottom: 1px solid #f3f4f6;
-        justify-content: flex-start;
-        color: #374151;
-        background: #ffffff;
-        transition: all 0.2s ease;
-        cursor: pointer;
-        position: relative;
-        z-index: 2001;
-        text-decoration: none;
-        font-weight: 500;
-    }
-    .nav-item:hover, .nav-item-audio:hover {
-        background: #f9fafb;
-        color: #1f2937;
-        border-left: 3px solid #3b82f6;
-        padding-left: 21px; /* Adjust for border */
-    }
-    .nav-item:last-child, .nav-item-audio:last-child {
-        border-bottom: none;
-    }
-    .header-content {
-        padding-right: 15px;
-    }
-    .hamburger-menu {
-        display: flex;
-        z-index: 2010; /* Higher than everything else */
-        position: relative;
-        background: #ffffff;
-        border: 2px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 4px;
-        transition: all 0.2s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-    .hamburger-menu:hover {
-        background: #f9fafb;
-        border-color: #3b82f6;
-        transform: scale(1.02);
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-    }
-}
-@media (max-width: 768px) {
-    .nav-menu {
-        width: 260px;
-    }
-    .hamburger-menu {
-        width: 38px;
-        height: 38px;
-        margin-left: 15px;
-    }
-    .hamburger-menu span {
-        width: 22px;
-    }
-}
-@media (max-width: 480px) {
-    .nav-menu {
-        width: 240px;
-    }
-    .hamburger-menu {
-        width: 36px;
-        height: 36px;
-        margin-left: 12px;
-    }
-    .hamburger-menu span {
-        width: 20px;
-        height: 2px;
-    }
-}
-
-@media (min-width: 1025px) {
-    .nav-menu {
-        display: flex !important;
-        position: static;
-        flex-direction: row;
-        align-items: center;
-        background: none;
-        box-shadow: none;
-        gap: 20px;
-        padding: 0;
-        transform: none !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
-    }
-    .hamburger-menu {
+    /* Hide desktop navigation, show hamburger */
+    .header-content > .nav-menu {
         display: none !important;
     }
-}
-
-/* ===== Additional Responsive Fixes ===== */
-/* Prevent body scroll when menu is open on mobile */
-body.menu-open {
-    overflow: hidden;
-}
-
-/* Enhanced hamburger styling */
-.hamburger-menu.active {
-    background: #f3f4f6;
-    border-color: #3b82f6;
-    transform: scale(1.02);
-}
-
-.hamburger-menu.active span:nth-child(1) {
-    background: #3b82f6;
-}
-
-.hamburger-menu.active span:nth-child(3) {
-    background: #3b82f6;
-}
-
-/* Smooth nav item transitions in mobile menu */
-.nav-item, .nav-item-audio {
-    transition: all 0.2s ease;
-}
-
-/* Mobile menu backdrop */
-@media (max-width: 1024px) {
-    /* Menghilangkan backdrop overlay yang gelap */
+    
+    .hamburger-menu {
+        display: flex !important; /* Show hamburger on mobile */
+        z-index: 2050;
+    }
+    
+    /* Transform nav-menu into mobile sidebar - Override any display:none from previous rules */
+    .nav-menu:not(.header-content > .nav-menu) {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 320px !important;
+        background: #ffffff !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: -4px 0 25px rgba(0,0,0,0.3) !important;
+        border-left: 2px solid #e5e7eb !important;
+        z-index: 2040 !important;
+        transform: translateX(100%) !important; /* Start off-screen to the right */
+        pointer-events: none !important;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        overflow-y: auto !important;
+        display: flex !important; /* CRITICAL: Force display flex regardless of previous rules */
+        height: 100vh !important;
+    }
+    
+    /* Show mobile header in sidebar */
+    .mobile-nav-header {
+        display: flex !important;
+    }
+    
+    /* Open state for mobile sidebar - Ultra specific to override any conflicting rules */
+    .nav-menu.open:not(.header-content > .nav-menu),
+    #nav-menu.open {
+        transform: translateX(0) !important; /* Slide in from right */
+        pointer-events: auto !important;
+        display: flex !important; /* Force display regardless of other rules */
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* CRITICAL: Mobile nav items must be visible - Ultra-specific selectors to override conflicts */
+    .nav-menu:not(.header-content > .nav-menu) .nav-item,
+    .nav-menu:not(.header-content > .nav-menu) .nav-item-audio,
+    #nav-menu .nav-item,
+    #nav-menu .nav-item-audio {
+        display: flex !important;
+        width: 100% !important;
+        padding: 18px 24px !important;
+        font-size: 16px !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        color: #374151 !important;
+        background: #ffffff !important;
+        transition: all 0.2s ease !important;
+        cursor: pointer !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        gap: 14px !important;
+        min-height: 60px !important;
+        position: relative !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        box-sizing: border-box !important;
+        flex-direction: row !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+    
+    /* CRITICAL: Force nav-item text and icons to be visible - Ultra-specific selectors to override conflicts */
+    .nav-menu:not(.header-content > .nav-menu) .nav-item .nav-item-text,
+    .nav-menu:not(.header-content > .nav-menu) .nav-item-audio .nav-item-text,
+    #nav-menu .nav-item .nav-item-text,
+    #nav-menu .nav-item-audio .nav-item-text {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        color: inherit !important;
+        flex: 1 !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        order: 1 !important;
+    }
+    
+    .nav-menu:not(.header-content > .nav-menu) .nav-item .nav-item-icon,
+    .nav-menu:not(.header-content > .nav-menu) .nav-item-audio .nav-item-icon,
+    #nav-menu .nav-item .nav-item-icon,
+    #nav-menu .nav-item-audio .nav-item-icon {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        width: 22px !important;
+        height: 22px !important;
+        color: #6b7280 !important;
+        flex-shrink: 0 !important;
+        order: 2 !important;
+    }
+    
+    /* Remove desktop pseudo-elements */
+    .nav-menu .nav-item::before,
+    .nav-menu .nav-item-audio::before {
+        display: none !important;
+    }
+    
+    /* Mobile hover effects */
+    .nav-menu .nav-item:hover,
+    .nav-menu .nav-item-audio:hover {
+        background: #f1f5f9 !important;
+        color: #1e40af !important;
+        border-left: 4px solid #3b82f6 !important;
+        padding-left: 20px !important;
+    }
+    
+    /* Mobile active states */
+    .nav-menu .nav-item.active,
+    .nav-menu .nav-item-audio.active {
+        background: #eff6ff !important;
+        color: #1d4ed8 !important;
+        border-left: 4px solid #3b82f6 !important;
+        padding-left: 20px !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Backdrop when menu is open */
     .nav-menu.open::before {
         content: '';
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: transparent; /* Tidak ada background gelap */
-        z-index: 1998;
-    }
-    
-    /* Prevent horizontal nav-item effects in mobile menu */
-    .nav-item::before, .nav-item-audio::before {
-        display: none;
-    }
-    
-    /* Enhanced mobile nav items */
-    .nav-item.active {
-        background: #f3f4f6;
-        color: #1f2937;
-        border-left: 4px solid #3b82f6;
-        transform: translateX(0);
+        right: 320px; /* Width of the menu */
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2030; /* Should be between map and menu */
+        backdrop-filter: blur(2px);
     }
 }
 
-/* Ensure hamburger is always visible on correct screen sizes */
-@media (max-width: 1024px) {
-    .hamburger-menu {
-        display: flex !important;
-        position: relative;
-        z-index: 2002;
-    }
-}
-
-/* Enhanced mobile responsiveness */
+/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .nav-menu {
-        width: 260px;
+        width: 280px !important;
     }
+    
+    .nav-menu.open::before {
+        right: 280px; /* Adjust backdrop width */
+    }
+
+    .nav-menu .nav-item,
+    .nav-menu .nav-item-audio {
+        font-size: 15px !important;
+        padding: 16px 20px !important;
+        min-height: 56px !important;
+    }
+    
     .hamburger-menu {
-        width: 38px;
-        height: 38px;
-        margin-left: 15px;
+        width: 38px !important;
+        height: 38px !important;
+        margin-left: 15px !important;
     }
+    
     .hamburger-menu span {
-        width: 22px;
+        width: 20px !important;
+        height: 2.5px !important;
     }
 }
 
 @media (max-width: 480px) {
     .nav-menu {
-        width: 240px;
+        width: 260px !important;
     }
+
+    .nav-menu.open::before {
+        right: 260px; /* Adjust backdrop width */
+    }
+    
+    .nav-menu > .nav-item,
+    .nav-menu > .nav-item-audio {
+        font-size: 14px !important;
+        padding: 14px 18px !important;
+        min-height: 52px !important;
+    }
+    
     .hamburger-menu {
-        width: 36px;
-        height: 36px;
-        margin-left: 12px;
+        width: 36px !important;
+        height: 36px !important;
+        margin-left: 12px !important;
     }
+    
     .hamburger-menu span {
-        width: 20px;
-        height: 2px;
+        width: 18px !important;
+        height: 2px !important;
     }
 }
 
-/* ===== End Responsive Navbar with Hamburger Menu ===== */
+/* Body scroll lock when menu is open */
+body.menu-open {
+    overflow: hidden !important;
+}
+
+/* ===== DESKTOP BREAKPOINT - FORCE HIDE HAMBURGER ===== */
+@media (min-width: 1025px) {
+    /* Force hamburger menu to be completely hidden on desktop */
+    .hamburger-menu {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    /* Ensure desktop navigation is always visible */
+    .header-content > .nav-menu {
+        display: flex !important;
+        position: static !important;
+        width: auto !important;
+        height: auto !important;
+        background: transparent !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 20px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        z-index: auto !important;
+        transform: none !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        transition: none !important;
+        overflow: visible !important;
+    }
+    
+    /* Ensure mobile header is hidden on desktop */
+    .mobile-nav-header {
+        display: none !important;
+    }
+
+    /* Reset nav-item styles for desktop */
+    .nav-menu .nav-item,
+    .nav-menu .nav-item-audio {
+        display: flex !important; /* Ensure flex for desktop layout */
+        padding-bottom: 5px !important; /* Original desktop padding */
+        border-bottom: none !important; /* Remove mobile border */
+        color: #666666 !important; /* Original desktop color */
+        font-weight: 600 !important; /* Original desktop font weight */
+        font-size: 14px !important; /* Original desktop font size */
+        justify-content: flex-start !important; /* Adjust if needed */
+        gap: 5px !important; /* Original desktop gap */
+        min-height: unset !important; /* Remove min-height */
+        background: transparent !important; /* Transparent background */
+        border-left: none !important; /* Remove mobile border */
+        transform: none !important; /* Reset transform */
+    }
+
+    .nav-menu .nav-item-text,
+    .nav-menu .nav-item-audio .nav-item-text {
+        font-size: 14px !important; /* Original desktop font size */
+        font-weight: 600 !important; /* Original desktop font weight */
+        text-align: left !important; /* Default text align */
+        white-space: nowrap !important; /* No wrapping */
+        overflow: hidden !important; /* Hide overflow */
+        text-overflow: ellipsis !important; /* Ellipsis for overflow */
+        flex: unset !important; /* Revert flex property */
+        order: unset !important; /* Revert order */
+    }
+
+    .nav-menu .nav-item-icon,
+    .nav-menu .nav-item-audio .nav-item-icon {
+        width: 16px !important; /* Original desktop icon size */
+        height: 16px !important; /* Original desktop icon size */
+        color: #666666 !important; /* Original desktop icon color */
+        flex-shrink: unset !important; /* Revert flex-shrink */
+        order: unset !important; /* Revert order */
+        margin-right: 0 !important; /* Reset margin */
+    }
+
+    /* Re-enable desktop pseudo-elements for underline effect */
+    .nav-menu .nav-item::before,
+    .nav-menu .nav-item-audio::before {
+        display: block !important;
+    }
+}

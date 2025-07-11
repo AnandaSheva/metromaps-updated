@@ -16,6 +16,7 @@
 </head>
 
 <body>
+    
     <div class="header">
         <div class="bg-pattern-1"></div>
         <div class="bg-pattern-2"></div>
@@ -32,6 +33,12 @@
             </div>
 
             <div class="nav-menu" id="nav-menu">
+                <!-- Mobile Header - only visible in responsive mode -->
+                <div class="mobile-nav-header">
+                    <img src="{{ asset('images/komdigi.png') }}" alt="Logo Komdigi" class="mobile-nav-logo">
+                    <h3 class="mobile-nav-title">Metro Maps</h3>
+                </div>
+                
                 <a href="#" class="nav-item" id="cctv-nav" onclick="showOnly('cctv')">
                     <span class="nav-item-text">CCTV</span>
                     <i data-lucide="cctv" class="nav-item-icon"></i>

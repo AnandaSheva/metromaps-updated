@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
             maxZoom: 20,
             subdomains:['mt0','mt1','mt2','mt3'],
-            attribution: '&copy; <a href="https://www.google.com/maps">Google Maps</a>'
+            attribution: '© <a href="https://www.google.com/maps">Google Maps</a>'
         }).addTo(mapInstance);
 
         console.log('Map initialized successfully');
@@ -77,13 +77,9 @@ function createIcon(color, iconName) {
     return L.divIcon({
         html: `
             <div style="position: relative; width: 36px; height: 54px; background: transparent; border: none;">
-                <!-- Shadow -->
                 <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 12px; height: 3px; background: rgba(0,0,0,0.25); border-radius: 50%; filter: blur(1px);"></div>
-                <!-- Tail (white outline) -->
                 <div style="position: absolute; top: 28px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-top: 18px solid white;"></div>
-                <!-- Tail (colored) -->
                 <div style="position: absolute; top: 26px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 16px solid ${color};"></div>
-                <!-- Main body -->
                 <div style="position: absolute; top: 2px; left: 50%; transform: translateX(-50%); width: 32px; height: 32px; background: ${color}; border: 3px solid white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.25);">
                     <i data-lucide="${iconName}" style="color: white; width: 16px; height: 16px;"></i>
                 </div>
@@ -561,26 +557,148 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Hamburger menu functionality
+    // Hamburger menu functionality - ONLY for mobile screens
     const hamburger = document.getElementById('hamburger-menu');
     const navMenu = document.getElementById('nav-menu');
     
     if (hamburger && navMenu) {
-        // Enhanced click handler with better touch support
+        // Enhanced click handler with mobile-only check
         hamburger.addEventListener('click', function(e) {
+            if (window.innerWidth > 1024) {
+                return;
+            }
+            
             e.preventDefault();
             e.stopPropagation();
             
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('open');
             
-            // Prevent body scroll when menu is open on mobile
-            if (window.innerWidth <= 1024) {
-                document.body.classList.toggle('menu-open', navMenu.classList.contains('open'));
+            document.body.classList.toggle('menu-open', navMenu.classList.contains('open'));
+            
+            // Re-render Lucide icons when menu opens to ensure they appear
+            if (navMenu.classList.contains('open')) {
+                // Force nav items to be visible immediately
+                const navItems = navMenu.querySelectorAll('.nav-item, .nav-item-audio');
+                navItems.forEach(item => {
+                    // Aggressively force visibility
+                    item.style.setProperty('display', 'flex', 'important');
+                    item.style.setProperty('opacity', '1', 'important');
+                    item.style.setProperty('visibility', 'visible', 'important');
+                    
+                    // Force text elements to be visible
+                    const textElement = item.querySelector('.nav-item-text');
+                    if (textElement) {
+                        textElement.style.setProperty('display', 'block', 'important');
+                        textElement.style.setProperty('opacity', '1', 'important');
+                        textElement.style.setProperty('visibility', 'visible', 'important');
+                    }
+                    
+                    // Force icon elements to be visible
+                    const iconElement = item.querySelector('.nav-item-icon');
+                    if (iconElement) {
+                        iconElement.style.setProperty('display', 'block', 'important');
+                        iconElement.style.setProperty('opacity', '1', 'important');
+                        iconElement.style.setProperty('visibility', 'visible', 'important');
+                    }
+                });
+                
+                // Short delay to allow CSS transition to start before re-creating icons
+                setTimeout(() => {
+                    lucide.createIcons();
+                    
+                    // Second enforcement after icons are created
+                    navItems.forEach(item => {
+                        item.style.setProperty('display', 'flex', 'important');
+                        item.style.setProperty('opacity', '1', 'important');
+                        item.style.setProperty('visibility', 'visible', 'important');
+                        
+                        const textElement = item.querySelector('.nav-item-text');
+                        if (textElement) {
+                            textElement.style.setProperty('display', 'block', 'important');
+                            textElement.style.setProperty('opacity', '1', 'important');
+                            textElement.style.setProperty('visibility', 'visible', 'important');
+                        }
+                        
+                        const iconElement = item.querySelector('.nav-item-icon');
+                        if (iconElement) {
+                            iconElement.style.setProperty('display', 'block', 'important');
+                            iconElement.style.setProperty('opacity', '1', 'important');
+                            iconElement.style.setProperty('visibility', 'visible', 'important');
+                        }
+                    });
+                }, 100); 
             }
         });
         
-        // Close menu when clicking backdrop (outside menu but inside backdrop)
+        // Add touch event for better mobile support (redundant if click works, but harmless)
+        hamburger.addEventListener('touchstart', function(e) {
+            if (window.innerWidth > 1024) {
+                return;
+            }
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('open');
+            
+            document.body.classList.toggle('menu-open', navMenu.classList.contains('open'));
+
+            if (navMenu.classList.contains('open')) {
+                // Force nav items to be visible immediately
+                const navItems = navMenu.querySelectorAll('.nav-item, .nav-item-audio');
+                navItems.forEach(item => {
+                    // Aggressively force visibility
+                    item.style.setProperty('display', 'flex', 'important');
+                    item.style.setProperty('opacity', '1', 'important');
+                    item.style.setProperty('visibility', 'visible', 'important');
+                    
+                    // Force text elements to be visible
+                    const textElement = item.querySelector('.nav-item-text');
+                    if (textElement) {
+                        textElement.style.setProperty('display', 'block', 'important');
+                        textElement.style.setProperty('opacity', '1', 'important');
+                        textElement.style.setProperty('visibility', 'visible', 'important');
+                    }
+                    
+                    // Force icon elements to be visible
+                    const iconElement = item.querySelector('.nav-item-icon');
+                    if (iconElement) {
+                        iconElement.style.setProperty('display', 'block', 'important');
+                        iconElement.style.setProperty('opacity', '1', 'important');
+                        iconElement.style.setProperty('visibility', 'visible', 'important');
+                    }
+                });
+
+                setTimeout(() => {
+                    lucide.createIcons();
+                    
+                    // Second enforcement after icons are created
+                    navItems.forEach(item => {
+                        item.style.setProperty('display', 'flex', 'important');
+                        item.style.setProperty('opacity', '1', 'important');
+                        item.style.setProperty('visibility', 'visible', 'important');
+                        
+                        const textElement = item.querySelector('.nav-item-text');
+                        if (textElement) {
+                            textElement.style.setProperty('display', 'block', 'important');
+                            textElement.style.setProperty('opacity', '1', 'important');
+                            textElement.style.setProperty('visibility', 'visible', 'important');
+                        }
+                        
+                        const iconElement = item.querySelector('.nav-item-icon');
+                        if (iconElement) {
+                            iconElement.style.setProperty('display', 'block', 'important');
+                            iconElement.style.setProperty('opacity', '1', 'important');
+                            iconElement.style.setProperty('visibility', 'visible', 'important');
+                        }
+                    });
+                }, 100);
+            }
+        });
+        
+        // Close menu when clicking backdrop (mobile only)
         document.addEventListener('click', function(e) {
             if (window.innerWidth <= 1024 && navMenu.classList.contains('open')) {
                 // Check if click is outside both nav menu and hamburger
@@ -589,6 +707,77 @@ document.addEventListener('DOMContentLoaded', function() {
                     hamburger.classList.remove('active');
                     document.body.classList.remove('menu-open');
                 }
+            }
+        });
+        
+        // Reset menu state on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1024) {
+                // Reset to desktop state
+                navMenu.classList.remove('open');
+                hamburger.classList.remove('active');
+                document.body.classList.remove('menu-open');
+                
+                // Forcing display properties to revert for desktop when resizing from mobile
+                const navItems = navMenu.querySelectorAll('.nav-item, .nav-item-audio');
+                navItems.forEach((item) => {
+                    item.style.removeProperty('display');
+                    item.style.removeProperty('opacity');
+                    item.style.removeProperty('visibility');
+                    item.style.removeProperty('width');
+                    item.style.removeProperty('padding');
+                    item.style.removeProperty('min-height');
+                    item.style.removeProperty('background');
+                    item.style.removeProperty('color');
+                    item.style.removeProperty('border-bottom');
+                    item.style.removeProperty('justify-content');
+                    item.style.removeProperty('align-items');
+                    item.style.removeProperty('gap');
+                    item.style.removeProperty('transition');
+                    item.style.removeProperty('cursor');
+                    item.style.removeProperty('position');
+                    item.style.removeProperty('box-sizing');
+                    item.style.removeProperty('flex-direction');
+                    item.style.removeProperty('margin');
+                    item.style.removeProperty('transform');
+                    item.style.removeProperty('border-radius');
+                    item.style.removeProperty('box-shadow');
+                    item.style.removeProperty('border-left'); // Added to remove mobile specific border
+
+                    // Reset text elements
+                    const textElement = item.querySelector('.nav-item-text');
+                    if (textElement) {
+                        textElement.style.removeProperty('display');
+                        textElement.style.removeProperty('opacity');
+                        textElement.style.removeProperty('visibility');
+                        textElement.style.removeProperty('color');
+                        textElement.style.removeProperty('flex');
+                        textElement.style.removeProperty('font-size');
+                        textElement.style.removeProperty('font-weight');
+                        textElement.style.removeProperty('order');
+                        textElement.style.removeProperty('text-align');
+                        textElement.style.removeProperty('white-space');
+                        textElement.style.removeProperty('overflow');
+                        textElement.style.removeProperty('text-overflow');
+                    }
+                    // Reset icon elements
+                    const iconElement = item.querySelector('.nav-item-icon');
+                    if (iconElement) {
+                        iconElement.style.removeProperty('display');
+                        iconElement.style.removeProperty('opacity');
+                        iconElement.style.removeProperty('visibility');
+                        iconElement.style.removeProperty('width');
+                        iconElement.style.removeProperty('height');
+                        iconElement.style.removeProperty('color');
+                        iconElement.style.removeProperty('flex-shrink');
+                        iconElement.style.removeProperty('order');
+                        iconElement.style.removeProperty('margin');
+                        iconElement.style.removeProperty('padding');
+                    }
+                    // Re-enable pseudo-elements for desktop (underline)
+                    item.style.setProperty('content', ''); // This doesn't actually re-enable ::before, but good practice
+                });
+                lucide.createIcons(); // Re-create icons for desktop if needed
             }
         });
         
@@ -605,12 +794,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Close menu when nav item is clicked (for mobile)
-        const navItems = document.querySelectorAll('.nav-item, .nav-item-audio');
-        navItems.forEach(item => {
+        const navItemsClickable = document.querySelectorAll('.nav-item, .nav-item-audio');
+        navItemsClickable.forEach(item => {
             item.addEventListener('click', function(e) {
-                // Ensure the navigation function still works
                 if (window.innerWidth <= 1024) {
-                    // Small delay to allow navigation to complete
                     setTimeout(() => {
                         navMenu.classList.remove('open');
                         hamburger.classList.remove('active');
@@ -618,15 +805,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }, 150);
                 }
             });
-        });
-        
-        // Close menu on window resize if screen becomes large
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 1024) {
-                navMenu.classList.remove('open');
-                hamburger.classList.remove('active');
-                document.body.classList.remove('menu-open');
-            }
         });
         
         // Handle escape key to close menu
@@ -710,22 +888,22 @@ function updateLegend(indikator) {
         html = `
             <h4>Persentase Rumah Tangga tanpa Air Bersih</h4>
             <div><span style="background:#800026 !important;"></span> ≥ 70%</div>
-            <div><span style="background:#e31a1c !important;"></span> 60 – &lt; 70%</div>
-            <div><span style="background:#fc9272 !important;"></span> 50 – &lt; 60%</div>
-            <div><span style="background:#a1d99b !important;"></span> 40 – &lt; 50%</div>
-            <div><span style="background:#31a354 !important;"></span> 30 – &lt; 40%</div>
-            <div><span style="background:#006837 !important;"></span> &lt; 30%</div>
+            <div><span style="background:#e31a1c !important;"></span> 60 – < 70%</div>
+            <div><span style="background:#fc9272 !important;"></span> 50 – < 60%</div>
+            <div><span style="background:#a1d99b !important;"></span> 40 – < 50%</div>
+            <div><span style="background:#31a354 !important;"></span> 30 – < 40%</div>
+            <div><span style="background:#006837 !important;"></span> < 30%</div>
             <div><span style="background:#ffffff !important; border: 1px solid #ccc;"></span> Tidak ada data</div>
         `;
     } else if (indikator === 'rasio_nakes') {
         html = `
             <h4>Rasio Penduduk per Tenaga Kesehatan vs Kepadatan</h4>
             <div><span style="background:#800026 !important;"></span> ≥ 30</div>
-            <div><span style="background:#e31a1c !important;"></span> 20 – &lt; 30</div>
-            <div><span style="background:#fc9272 !important;"></span> 15 – &lt; 20</div>
-            <div><span style="background:#a1d99b !important;"></span> 10 – &lt; 15</div>
-            <div><span style="background:#31a354 !important;"></span> 5 – &lt; 10</div>
-            <div><span style="background:#006837 !important;"></span> &lt; 5</div>
+            <div><span style="background:#e31a1c !important;"></span> 20 – < 30</div>
+            <div><span style="background:#fc9272 !important;"></span> 15 – < 20</div>
+            <div><span style="background:#a1d99b !important;"></span> 10 – < 15</div>
+            <div><span style="background:#31a354 !important;"></span> 5 – < 10</div>
+            <div><span style="background:#006837 !important;"></span> < 5</div>
             <div><span style="background:#ffffff !important; border: 1px solid #ccc;"></span> Tidak ada data</div>
         `;
     }
